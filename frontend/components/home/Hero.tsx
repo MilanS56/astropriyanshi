@@ -1,0 +1,211 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
+
+export default function Hero() {
+  const heroRef = useRef<HTMLElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.35,
+      },
+    );
+
+    observer.observe(hero);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <section
+      ref={heroRef}
+      className="relative isolate min-h-screen overflow-hidden"
+    >
+      {/* Background */}
+      <picture className="absolute inset-0 z-0">
+        <source
+          media="(max-width: 767px)"
+          srcSet="/images/hero/hero-desktop-no-moon.webp"
+        />
+
+        <source
+          media="(max-width: 1023px)"
+          srcSet="/images/hero/hero-desktop-no-moon.webp"
+        />
+
+        <img
+          src="/images/hero/hero-desktop-no-moon.webp"
+          alt=""
+          className="h-full w-full object-cover"
+        />
+      </picture>
+      <div
+        className="pointer-events-none absolute inset-0 z-10"
+        style={{
+          background: `
+      linear-gradient(
+        90deg,
+        rgba(3, 12, 28, 0.65) 0%,
+        rgba(3, 12, 28, 0.35) 55%,
+        transparent 100%
+      )
+    `,
+        }}
+      />
+      {/* Animated Moon */}
+      <img
+        src="/images/hero/hero-moon.webp"
+        alt=""
+        aria-hidden="true"
+        className={`absolute left-[76%] top-[45%] z-20 w-[220px] -translate-x-1/2 transition-all duration-[2000ms] ease-out md:w-[260px] lg:w-[300px] ${
+          isVisible
+            ? "translate-y-0 opacity-100"
+            : "translate-y-[180px] opacity-0"
+        }`}
+      />
+
+      <img
+        src="/images/hero/hero-mountains.webp"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-25 h-full w-full object-cover"
+      />
+
+      {/* Temporary Hero Content */}
+      <div className="relative z-30 flex min-h-screen items-center">
+        <div className="w-full max-w-[1600px] px-6 pt-28 sm:px-10 lg:px-16 lg:pt-24 xl:px-20">
+          <div className="ml-[5%] max-w-[850px] -translate-y-6">
+            {/* Eyebrow */}
+            <p className="mb-5 text-xs font-medium uppercase tracking-[0.35em] text-[#E8B85C] sm:text-sm">
+              ALIGN&nbsp;&nbsp;·&nbsp;&nbsp;UNDERSTAND&nbsp;&nbsp;·&nbsp;&nbsp;EMPOWER
+            </p>
+
+            {/* Main Heading */}
+            <h1 className="mt-5 max-w-[780px] font-serif text-[clamp(3.5rem,5vw,5rem)] leading-[0.95] tracking-[-0.02em] text-[#f8f4ec]">
+              <span className="block">Guiding You Through</span>
+
+              <span className="block italic text-[#f4b94f]">the Language</span>
+
+              <span className="block italic text-[#f4b94f]">of the Stars.</span>
+            </h1>
+
+            {/* Description */}
+            <p className="mt-8 max-w-[560px] text-[1.05rem] leading-[1.7] text-[#f3eadc]">
+              Personalized astrological insights for a more balanced, confident
+              and purposeful life.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="mt-8 flex items-center gap-5 sm:flex-row">
+              {/* Primary CTA */}
+              <a
+                href="/consultations"
+                className="group inline-flex items-center justify-center gap-4 rounded-full bg-[#F0B957] px-6 py-3.5 font-serif text-[15px] text-[#071222] transition-all duration-300 hover:bg-[#F6C96F] sm:px-7"
+              >
+                <span>Book a Consultation</span>
+
+                <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </a>
+
+              {/* Secondary CTA */}
+              <a
+                href="#services"
+                className="rounded-full border border-[#d9a441]/70 bg-[#030c1c]/30 px-8 py-4 text-[#f8f4ec] backdrop-blur-[2px] transition hover:bg-[#030c1c]/50"
+              >
+                <span>Explore Services</span>
+
+                <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </a>
+            </div>
+
+            <div className="mt-10 flex w-full max-w-[780px] items-stretch">
+              {" "}
+              {/* Clarity */}
+              <div className="flex flex-1 flex-col items-start px-5 first:pl-0">
+                <img
+                  src="/images/decorators/lotus.svg"
+                  alt=""
+                  className="mb-3 h-8 w-8"
+                />
+
+                <h3 className="font-serif text-lg text-[#f6efe4]">Clarity</h3>
+
+                <p className="mt-1 text-sm leading-5 text-[#d8cfc1]">
+                  for your present
+                </p>
+              </div>
+              {/* Divider */}
+              <div className="my-1 w-px bg-[#c9963e]/30" />
+              {/* Guidance */}
+              <div className="flex flex-1 flex-col items-start px-5">
+                <img
+                  src="/images/decorators/moon.svg"
+                  alt=""
+                  className="mb-3 h-8 w-8"
+                />
+
+                <h3 className="font-serif text-base text-[#f6efe4] sm:text-lg">
+                  Guidance
+                </h3>
+
+                <p className="mt-1 text-xs leading-5 text-[#d8cfc1] sm:text-sm">
+                  for your future
+                </p>
+              </div>
+              {/* Divider */}
+              <div className="my-1 w-px bg-[#c9963e]/30" />
+              {/* Balance */}
+              <div className="flex flex-1 flex-col items-start px-5">
+                <img
+                  src="/images/decorators/star.svg"
+                  alt=""
+                  className="mb-3 h-8 w-8"
+                />
+
+                <h3 className="font-serif text-base text-[#f6efe4] sm:text-lg">
+                  Balance
+                </h3>
+
+                <p className="mt-1 text-xs leading-5 text-[#d8cfc1] sm:text-sm">
+                  in your journey
+                </p>
+              </div>
+              {/* Divider */}
+              <div className="my-1 w-px bg-[#c9963e]/30" />
+              {/* Fulfillment */}
+              <div className="flex flex-1 flex-col items-start px-5">
+                <img
+                  src="/images/decorators/sun.svg"
+                  alt=""
+                  className="mb-3 h-8 w-8"
+                />
+
+                <h3 className="font-serif text-base text-[#f6efe4] sm:text-lg">
+                  A More Fulfilling
+                </h3>
+
+                <p className="mt-1 text-xs leading-5 text-[#d8cfc1] sm:text-sm">
+                  you
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
