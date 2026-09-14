@@ -15,7 +15,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50 bg-[#00030e]/30">
+    <header className="absolute inset-x-0 top-0 z-50 ">
       <nav className="mx-auto flex max-w-[1600px] items-center justify-between px-6 py-5 lg:px-10 xl:px-14">
         {/* Brand */}
         <a

@@ -35,12 +35,12 @@ export default function Hero() {
       <picture className="absolute inset-0 z-0">
         <source
           media="(max-width: 767px)"
-          srcSet="/images/hero/hero-desktop-no-moon.webp"
+          srcSet="/images/hero/hero-mobile.webp"
         />
 
         <source
           media="(max-width: 1023px)"
-          srcSet="/images/hero/hero-desktop-no-moon.webp"
+          srcSet="/images/hero/hero-tablet.webp"
         />
 
         <img
@@ -67,7 +67,7 @@ export default function Hero() {
         src="/images/hero/hero-moon.webp"
         alt=""
         aria-hidden="true"
-        className={`absolute left-[76%] top-[45%] z-20 w-[220px] -translate-x-1/2 transition-all duration-[2000ms] ease-out md:w-[260px] lg:w-[300px] ${
+        className={`absolute left-[84%] top-[20%] z-20 w-[220px] -translate-x-1/2 transition-all duration-[3000ms] ease-out md:w-[260px] lg:w-[300px] ${
           isVisible
             ? "translate-y-0 opacity-100"
             : "translate-y-[180px] opacity-0"
@@ -80,18 +80,25 @@ export default function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-25 h-full w-full object-cover"
       />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[26] h-[260px]"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(3, 12, 28, 0.82) 0%, rgba(3, 12, 28, 0.58) 45%, rgba(3, 12, 28, 0.18) 75%, transparent 100%)",
+        }}
+      />
 
       {/* Temporary Hero Content */}
-      <div className="relative z-30 flex min-h-screen items-center">
-        <div className="w-full max-w-[1600px] px-6 pt-28 sm:px-10 lg:px-16 lg:pt-24 xl:px-20">
-          <div className="ml-[5%] max-w-[850px] -translate-y-6">
+      <div className="relative z-30 flex min-h-screen">
+        <div className="w-full max-w-[1600px] px-6 pt-32 pb-20 sm:px-10 sm:pt-36 lg:px-16 lg:pt-40 xl:px-20">
+          <div className="w-full max-w-[850px] lg:ml-[5%]">
             {/* Eyebrow */}
             <p className="mb-5 text-xs font-medium uppercase tracking-[0.35em] text-[#E8B85C] sm:text-sm">
               ALIGN&nbsp;&nbsp;·&nbsp;&nbsp;UNDERSTAND&nbsp;&nbsp;·&nbsp;&nbsp;EMPOWER
             </p>
 
             {/* Main Heading */}
-            <h1 className="mt-5 max-w-[780px] font-serif text-[clamp(3.5rem,5vw,5rem)] leading-[0.95] tracking-[-0.02em] text-[#f8f4ec]">
+            <h1 className="mt-5 max-w-[780px] font-serif text-[clamp(3rem,8vw,4.75rem)] leading-[0.96] tracking-[-0.05em] text-[#f8f4ec]">
               <span className="block">Guiding You Through</span>
 
               <span className="block italic text-[#f4b94f]">the Language</span>
@@ -100,14 +107,15 @@ export default function Hero() {
             </h1>
 
             {/* Description */}
-            <p className="mt-8 max-w-[560px] text-[1.05rem] leading-[1.7] text-[#f3eadc]">
+            <p className="mt-7 max-w-[540px] text-[1rem] leading-[1.75] text-[#f3eadc]">
               Personalized astrological insights for a more balanced, confident
               and purposeful life.
             </p>
 
             {/* CTA Buttons */}
-            <div className="mt-8 flex items-center gap-5 sm:flex-row">
+            <div className="mt-7 flex items-center gap-4 sm:flex-row">
               {/* Primary CTA */}
+
               <a
                 href="/consultations"
                 className="group inline-flex items-center justify-center gap-4 rounded-full bg-[#F0B957] px-6 py-3.5 font-serif text-[15px] text-[#071222] transition-all duration-300 hover:bg-[#F6C96F] sm:px-7"
@@ -122,7 +130,7 @@ export default function Hero() {
               {/* Secondary CTA */}
               <a
                 href="#services"
-                className="rounded-full border border-[#d9a441]/70 bg-[#030c1c]/30 px-8 py-4 text-[#f8f4ec] backdrop-blur-[2px] transition hover:bg-[#030c1c]/50"
+                className="group inline-flex items-center gap-3 rounded-full border border-[#d9a441]/70 bg-[#030c1c]/30 px-8 py-4 text-[#f8f4ec] backdrop-blur-[2px] transition-all duration-300 hover:bg-[#030c1c]/50"
               >
                 <span>Explore Services</span>
 
@@ -132,74 +140,79 @@ export default function Hero() {
               </a>
             </div>
 
-            <div className="mt-10 flex w-full max-w-[780px] items-stretch">
+            <div className="relative mt-10 flex w-full max-w-[700px] overflow-hidden border-y border-[#c9963e]/20 py-4 sm:flex sm:items-stretch">
               {" "}
+              <div
+                className="pointer-events-none absolute inset-0 -z-10"
+                style={{
+                  background:
+                    "linear-gradient(90deg, rgba(3, 12, 28, 0.72) 0%, rgba(3, 12, 28, 0.48) 55%, rgba(3, 12, 28, 0.12) 100%)",
+                }}
+              />
               {/* Clarity */}
-              <div className="flex flex-1 flex-col items-start px-5 first:pl-0">
+              <div className="flex w-1/2 flex-col items-start px-4 py-3 sm:w-auto sm:flex-1 sm:py-0 first:pl-0">
+                {" "}
                 <img
                   src="/images/decorators/lotus.svg"
                   alt=""
-                  className="mb-3 h-8 w-8"
+                  className="mb-2 h-7 w-7"
                 />
-
-                <h3 className="font-serif text-lg text-[#f6efe4]">Clarity</h3>
-
-                <p className="mt-1 text-sm leading-5 text-[#d8cfc1]">
+                <h3 className="font-serif font-medium text-base text-[#f6efe4]">
+                  Clarity
+                </h3>
+                <p className="mt-1 text-xs leading-5 text-[#c9c0b2] sm:text-sm">
                   for your present
                 </p>
               </div>
               {/* Divider */}
-              <div className="my-1 w-px bg-[#c9963e]/30" />
+              <div className="my-1 h-12 w-px bg-[#c9963e]/25" />
               {/* Guidance */}
-              <div className="flex flex-1 flex-col items-start px-5">
+              <div className="flex w-1/2 flex-col items-start px-4 py-3 sm:w-auto sm:flex-1 sm:py-0">
+                {" "}
                 <img
                   src="/images/decorators/moon.svg"
                   alt=""
-                  className="mb-3 h-8 w-8"
+                  className="mb-2 h-7 w-7"
                 />
-
-                <h3 className="font-serif text-base text-[#f6efe4] sm:text-lg">
+                <h3 className="font-serif font-medium text-base text-[#f6efe4]">
                   Guidance
                 </h3>
-
-                <p className="mt-1 text-xs leading-5 text-[#d8cfc1] sm:text-sm">
+                <p className="mt-1 text-xs leading-5 text-[#c9c0b2] sm:text-sm">
                   for your future
                 </p>
               </div>
               {/* Divider */}
-              <div className="my-1 w-px bg-[#c9963e]/30" />
+              <div className="my-1 h-12 w-px bg-[#c9963e]/25" />
               {/* Balance */}
-              <div className="flex flex-1 flex-col items-start px-5">
+              <div className="flex w-1/2 flex-col items-start px-4 py-3 sm:w-auto sm:flex-1 sm:py-0">
+                {" "}
                 <img
                   src="/images/decorators/star.svg"
                   alt=""
-                  className="mb-3 h-8 w-8"
+                  className="mb-2 h-7 w-7"
                 />
-
-                <h3 className="font-serif text-base text-[#f6efe4] sm:text-lg">
+                <h3 className="font-serif font-medium text-base text-[#f6efe4]">
                   Balance
                 </h3>
-
-                <p className="mt-1 text-xs leading-5 text-[#d8cfc1] sm:text-sm">
+                <p className="mt-1 text-xs leading-5 text-[#c9c0b2] sm:text-sm">
                   in your journey
                 </p>
               </div>
               {/* Divider */}
-              <div className="my-1 w-px bg-[#c9963e]/30" />
+              <div className="my-1 h-12 w-px bg-[#c9963e]/25" />
               {/* Fulfillment */}
-              <div className="flex flex-1 flex-col items-start px-5">
+              <div className="flex w-1/2 flex-col items-start px-4 py-3 sm:w-auto sm:flex-1 sm:py-0">
+                {" "}
                 <img
                   src="/images/decorators/sun.svg"
                   alt=""
-                  className="mb-3 h-8 w-8"
+                  className="mb-2 h-7 w-7"
                 />
-
-                <h3 className="font-serif text-base text-[#f6efe4] sm:text-lg">
-                  A More Fulfilling
+                <h3 className="font-serif font-medium text-base text-[#f6efe4]">
+                  Abundance
                 </h3>
-
-                <p className="mt-1 text-xs leading-5 text-[#d8cfc1] sm:text-sm">
-                  you
+                <p className="mt-1 text-xs leading-5 text-[#c9c0b2] sm:text-sm">
+                  in life and love
                 </p>
               </div>
             </div>
