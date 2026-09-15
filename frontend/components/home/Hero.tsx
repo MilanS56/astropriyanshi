@@ -29,17 +29,17 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative isolate min-h-screen overflow-hidden"
+      className="relative isolate overflow-hidden bg-[#030c1c] lg:min-h-screen lg:portrait:min-h-[min(100svh,60rem)]"
     >
       {/* Background */}
-      <picture className="absolute inset-0 z-0">
+      <picture aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
         <source
           media="(max-width: 767px)"
           srcSet="/images/hero/hero-mobile.webp"
         />
 
         <source
-          media="(max-width: 1023px)"
+          media="(min-width: 768px) and (max-width: 1023px)"
           srcSet="/images/hero/hero-tablet.webp"
         />
 
@@ -67,10 +67,10 @@ export default function Hero() {
         src="/images/hero/hero-moon.webp"
         alt=""
         aria-hidden="true"
-        className={`absolute left-[84%] top-[20%] z-20 w-[220px] -translate-x-1/2 transition-all duration-[3000ms] ease-out md:w-[260px] lg:w-[300px] ${
+        className={`pointer-events-none absolute right-16 top-[88px] z-20 w-[68px] transition-[translate,opacity] duration-[3000ms] ease-out md:right-8 md:top-40 md:w-[150px] lg:right-auto lg:left-[84%] lg:top-[20%] lg:w-[300px] lg:-translate-x-1/2 lg:portrait:w-[220px] lg:portrait:top-[24%] ${
           isVisible
             ? "translate-y-0 opacity-100"
-            : "translate-y-[180px] opacity-0"
+            : "translate-y-4 opacity-0 md:translate-y-12 lg:translate-y-[180px]"
         }`}
       />
 
@@ -78,10 +78,10 @@ export default function Hero() {
         src="/images/hero/hero-mountains.webp"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-25 h-full w-full object-cover"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-25 h-[360px] w-full object-cover object-bottom opacity-80 md:h-[440px] md:opacity-90 lg:inset-0 lg:h-full lg:object-center lg:opacity-100"
       />
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[26] h-[260px]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[26] h-[400px] md:h-[360px] lg:h-[260px]"
         style={{
           background:
             "linear-gradient(to top, rgba(3, 12, 28, 0.82) 0%, rgba(3, 12, 28, 0.58) 45%, rgba(3, 12, 28, 0.18) 75%, transparent 100%)",
@@ -89,16 +89,16 @@ export default function Hero() {
       />
 
       {/* Temporary Hero Content */}
-      <div className="relative z-30 flex min-h-screen">
-        <div className="w-full max-w-[1600px] px-6 pt-32 pb-20 sm:px-10 sm:pt-36 lg:px-16 lg:pt-40 xl:px-20">
+      <div className="relative z-30 flex lg:min-h-screen lg:portrait:min-h-[min(100svh,60rem)]">
+        <div className="w-full max-w-[1600px] px-6 pt-44 pb-14 md:px-8 md:pt-36 md:pb-16 lg:px-16 lg:pt-40 lg:pb-20 xl:px-20">
           <div className="w-full max-w-[850px] lg:ml-[5%]">
             {/* Eyebrow */}
-            <p className="mb-5 text-xs font-medium uppercase tracking-[0.35em] text-[#E8B85C] sm:text-sm">
+            <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.22em] text-[#E8B85C] md:text-xs md:tracking-[0.3em] lg:text-sm lg:tracking-[0.35em]">
               ALIGN&nbsp;&nbsp;·&nbsp;&nbsp;UNDERSTAND&nbsp;&nbsp;·&nbsp;&nbsp;EMPOWER
             </p>
 
             {/* Main Heading */}
-            <h1 className="mt-5 max-w-[780px] font-serif text-[clamp(3rem,8vw,4.75rem)] leading-[0.96] tracking-[-0.05em] text-[#f8f4ec]">
+            <h1 className="mt-5 max-w-[780px] font-serif text-[clamp(1.75rem,8.5vw,3.75rem)] leading-[1.06] tracking-[-0.05em] text-[#f8f4ec] md:max-w-[calc(100%-180px)] md:text-[clamp(2.75rem,5.8vw,3.5rem)] lg:max-w-[780px] lg:text-[clamp(3rem,8vw,4.75rem)] lg:leading-[0.96]">
               <span className="block">Guiding You Through</span>
 
               <span className="block italic text-[#f4b94f]">the Language</span>
@@ -107,18 +107,18 @@ export default function Hero() {
             </h1>
 
             {/* Description */}
-            <p className="mt-7 max-w-[540px] text-[1rem] leading-[1.75] text-[#f3eadc]">
+            <p className="mt-6 max-w-[34rem] text-[1rem] leading-[1.75] text-[#f3eadc] md:max-w-[440px] lg:mt-7 lg:max-w-[540px]">
               Personalized astrological insights for a more balanced, confident
               and purposeful life.
             </p>
 
             {/* CTA Buttons */}
-            <div className="mt-7 flex items-center gap-4 sm:flex-row">
+            <div className="mt-7 flex max-w-[360px] flex-col items-stretch gap-3 md:max-w-none md:flex-row md:flex-wrap md:items-center md:gap-4">
               {/* Primary CTA */}
 
               <a
                 href="/consultations"
-                className="group inline-flex items-center justify-center gap-4 rounded-full bg-[#F0B957] px-6 py-3.5 font-serif text-[15px] text-[#071222] transition-all duration-300 hover:bg-[#F6C96F] sm:px-7"
+                className="group inline-flex min-h-14 shrink-0 items-center justify-center gap-4 rounded-full bg-[#F0B957] px-6 py-3.5 font-serif text-[15px] text-[#071222] transition-all duration-300 hover:bg-[#F6C96F] sm:px-7"
               >
                 <span>Book a Consultation</span>
 
@@ -130,7 +130,7 @@ export default function Hero() {
               {/* Secondary CTA */}
               <a
                 href="#services"
-                className="group inline-flex items-center gap-3 rounded-full border border-[#d9a441]/70 bg-[#030c1c]/30 px-8 py-4 text-[#f8f4ec] backdrop-blur-[2px] transition-all duration-300 hover:bg-[#030c1c]/50"
+                className="group inline-flex min-h-14 shrink-0 items-center justify-center gap-3 rounded-full border border-[#d9a441]/70 bg-[#030c1c]/30 px-8 py-4 text-[#f8f4ec] backdrop-blur-[2px] transition-all duration-300 hover:bg-[#030c1c]/50"
               >
                 <span>Explore Services</span>
 
@@ -140,7 +140,7 @@ export default function Hero() {
               </a>
             </div>
 
-            <div className="relative mt-10 flex w-full max-w-[700px] overflow-hidden border-y border-[#c9963e]/20 py-4 sm:flex sm:items-stretch">
+            <div className="relative mt-9 grid w-full max-w-[540px] grid-cols-2 gap-y-5 border-y border-[#c9963e]/20 py-5 lg:mt-10 lg:flex lg:max-w-[700px] lg:items-stretch lg:gap-y-0 lg:py-4">
               {" "}
               <div
                 className="pointer-events-none absolute inset-0 -z-10"
@@ -150,68 +150,68 @@ export default function Hero() {
                 }}
               />
               {/* Clarity */}
-              <div className="flex w-1/2 flex-col items-start px-4 py-3 sm:w-auto sm:flex-1 sm:py-0 first:pl-0">
+              <div className="flex min-w-0 flex-col items-start pr-4 lg:flex-1 lg:px-4 first:pl-0">
                 {" "}
                 <img
                   src="/images/decorators/lotus.svg"
                   alt=""
-                  className="mb-2 h-7 w-7"
+                  className="mb-2 h-6 w-6 lg:h-7 lg:w-7"
                 />
                 <h3 className="font-serif font-medium text-base text-[#f6efe4]">
                   Clarity
                 </h3>
-                <p className="mt-1 text-xs leading-5 text-[#c9c0b2] sm:text-sm">
+                <p className="mt-1 text-[13px] leading-5 text-[#c9c0b2] md:text-sm">
                   for your present
                 </p>
               </div>
               {/* Divider */}
-              <div className="my-1 h-12 w-px bg-[#c9963e]/25" />
+              <div className="my-1 hidden h-12 w-px bg-[#c9963e]/25 lg:block" />
               {/* Guidance */}
-              <div className="flex w-1/2 flex-col items-start px-4 py-3 sm:w-auto sm:flex-1 sm:py-0">
+              <div className="flex min-w-0 flex-col items-start border-l border-[#c9963e]/25 pl-5 pr-2 lg:flex-1 lg:border-0 lg:px-4">
                 {" "}
                 <img
                   src="/images/decorators/moon.svg"
                   alt=""
-                  className="mb-2 h-7 w-7"
+                  className="mb-2 h-6 w-6 lg:h-7 lg:w-7"
                 />
                 <h3 className="font-serif font-medium text-base text-[#f6efe4]">
                   Guidance
                 </h3>
-                <p className="mt-1 text-xs leading-5 text-[#c9c0b2] sm:text-sm">
+                <p className="mt-1 text-[13px] leading-5 text-[#c9c0b2] md:text-sm">
                   for your future
                 </p>
               </div>
               {/* Divider */}
-              <div className="my-1 h-12 w-px bg-[#c9963e]/25" />
+              <div className="my-1 hidden h-12 w-px bg-[#c9963e]/25 lg:block" />
               {/* Balance */}
-              <div className="flex w-1/2 flex-col items-start px-4 py-3 sm:w-auto sm:flex-1 sm:py-0">
+              <div className="flex min-w-0 flex-col items-start pr-4 lg:flex-1 lg:px-4">
                 {" "}
                 <img
                   src="/images/decorators/star.svg"
                   alt=""
-                  className="mb-2 h-7 w-7"
+                  className="mb-2 h-6 w-6 lg:h-7 lg:w-7"
                 />
                 <h3 className="font-serif font-medium text-base text-[#f6efe4]">
                   Balance
                 </h3>
-                <p className="mt-1 text-xs leading-5 text-[#c9c0b2] sm:text-sm">
+                <p className="mt-1 text-[13px] leading-5 text-[#c9c0b2] md:text-sm">
                   in your journey
                 </p>
               </div>
               {/* Divider */}
-              <div className="my-1 h-12 w-px bg-[#c9963e]/25" />
+              <div className="my-1 hidden h-12 w-px bg-[#c9963e]/25 lg:block" />
               {/* Fulfillment */}
-              <div className="flex w-1/2 flex-col items-start px-4 py-3 sm:w-auto sm:flex-1 sm:py-0">
+              <div className="flex min-w-0 flex-col items-start border-l border-[#c9963e]/25 pl-5 pr-2 lg:flex-1 lg:border-0 lg:px-4">
                 {" "}
                 <img
                   src="/images/decorators/sun.svg"
                   alt=""
-                  className="mb-2 h-7 w-7"
+                  className="mb-2 h-6 w-6 lg:h-7 lg:w-7"
                 />
                 <h3 className="font-serif font-medium text-base text-[#f6efe4]">
                   Abundance
                 </h3>
-                <p className="mt-1 text-xs leading-5 text-[#c9c0b2] sm:text-sm">
+                <p className="mt-1 text-[13px] leading-5 text-[#c9c0b2] md:text-sm">
                   in life and love
                 </p>
               </div>
