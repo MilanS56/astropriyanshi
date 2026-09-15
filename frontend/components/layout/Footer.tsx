@@ -35,7 +35,7 @@ export function Footer() {
           </div>
 
           <p className="max-w-[18rem] text-sm leading-6 text-[#030c1c]/68 md:col-span-2 md:max-w-md lg:col-span-1 lg:max-w-none lg:justify-self-center lg:whitespace-nowrap lg:text-center">
-            Guiding you towards clarity, balance &amp; purpose.
+            Guiding You Through The Language Of The Stars.
           </p>
 
           <nav
