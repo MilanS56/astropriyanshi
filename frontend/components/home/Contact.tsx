@@ -5,6 +5,7 @@ import { FormEvent, useState } from "react";
 type FormValues = {
   name: string;
   email: string;
+  phone: string;
   message: string;
 };
 
@@ -14,8 +15,21 @@ type FormStatus = "idle" | "submitting" | "success" | "error";
 const initialValues: FormValues = {
   name: "",
   email: "",
+  phone: "",
   message: "",
 };
+
+const zodiacDecorators = [
+  "aries.svg",
+  "taurus.svg",
+  "gemini.svg",
+  "leo.svg",
+  "virgo.svg",
+  "libra.svg",
+  "scorpio.svg",
+  "sagittarius.svg",
+  "capricorn.svg",
+];
 
 function validateForm(values: FormValues) {
   const errors: FormErrors = {};
@@ -64,9 +78,12 @@ export function Contact() {
     setStatus("success");
   }
 
-  const inputBaseClass =
-    "mt-3 w-full rounded-none border-0 border-b border-[#f8f4ec]/22 bg-transparent px-0 py-3 text-base text-[#f8f4ec] outline-none transition-colors duration-300 placeholder:text-[#f8f4ec]/38 hover:border-[#F0B957]/55 focus:border-[#F0B957] focus:ring-0";
-  const errorClass = "border-[#F0B957]";
+  const fieldClass =
+    "mt-2.5 w-full rounded-2xl border border-[#f8f4ec]/12 bg-[#f8f4ec]/[0.035] px-4 py-3.5 text-base leading-6 text-[#f8f4ec] outline-none transition-colors duration-300 placeholder:text-[#f8f4ec]/38 hover:border-[#f8f4ec]/24 focus:border-[#F0B957]/80 focus:bg-[#f8f4ec]/[0.055] focus:ring-2 focus:ring-[#F0B957]/20";
+  const errorClass = "border-[#F0B957]/85 focus:border-[#F0B957]";
+  const labelClass =
+    "text-[11px] font-semibold uppercase tracking-[0.24em] text-[#f4b94f]";
+  const errorTextClass = "mt-2 min-h-5 text-xs leading-5 text-[#F0B957]";
 
   return (
     <section
@@ -74,16 +91,32 @@ export function Contact() {
       aria-labelledby="contact-heading"
       className="relative isolate overflow-hidden bg-[#030c1c] px-6 py-16 text-[#f8f4ec] md:px-8 md:py-20 lg:px-10 lg:py-24 xl:px-14"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_84%_20%,rgba(240,185,87,0.12),transparent_30%),linear-gradient(180deg,rgba(248,244,236,0.04),transparent_42%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_84%_16%,rgba(240,185,87,0.10),transparent_28%),linear-gradient(180deg,rgba(248,244,236,0.035),transparent_44%)]" />
 
       <img
         src="/images/decorators/moon.svg"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute right-8 top-14 h-12 w-12 opacity-20 md:right-[8%] md:top-20 md:h-16 md:w-16"
+        className="pointer-events-none absolute right-6 top-12 h-16 w-16 opacity-[0.09] md:right-[7%] md:top-16 md:h-24 md:w-24 lg:right-[9%] lg:top-20"
       />
 
-      <div className="relative z-10 mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[0.45fr_0.55fr] lg:items-start lg:gap-16">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-5 px-6 md:bottom-7 md:px-8 lg:bottom-8 lg:px-10 xl:px-14"
+      >
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between opacity-55 md:opacity-65">
+          {zodiacDecorators.map((name) => (
+            <img
+              key={name}
+              src={`/images/decorators/${name}`}
+              alt=""
+              className="h-4 w-4 shrink-0 object-contain opacity-[0.10] brightness-0 invert sepia saturate-[1.15] hue-rotate-[350deg] min-[390px]:h-5 min-[390px]:w-5 md:h-6 md:w-6 md:opacity-[0.12] lg:h-7 lg:w-7"
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="relative z-10 mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-[0.44fr_0.56fr] lg:items-center lg:gap-14 xl:gap-20">
         <div>
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-[#f4b94f] md:text-[13px]">
             LET&apos;S CONNECT
@@ -105,16 +138,15 @@ export function Contact() {
         </div>
 
         <form
-          className="w-full max-w-[42rem] lg:ml-auto"
+          className="relative w-full max-w-[46rem] overflow-hidden rounded-[1.25rem] border border-[#f8f4ec]/10 bg-[#f8f4ec]/[0.035] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.18)] sm:p-6 md:p-7 lg:ml-auto lg:p-8"
           onSubmit={handleSubmit}
           noValidate
         >
-          <div className="grid gap-7 md:grid-cols-2 md:gap-x-8 lg:gap-x-10">
+          <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#F0B957]/45 to-transparent" />
+
+          <div className="grid gap-5 md:grid-cols-2 md:gap-x-5 lg:gap-x-6">
             <div>
-              <label
-                htmlFor="contact-name"
-                className="font-serif text-sm text-[#f4b94f]"
-              >
+              <label htmlFor="contact-name" className={labelClass}>
                 Name
               </label>
               <input
@@ -127,21 +159,17 @@ export function Contact() {
                 placeholder="Your name"
                 aria-invalid={Boolean(errors.name)}
                 aria-describedby="contact-name-error"
-                className={`${inputBaseClass} ${errors.name ? errorClass : ""}`}
+                required
+                disabled={status === "submitting"}
+                className={`${fieldClass} ${errors.name ? errorClass : ""}`}
               />
-              <p
-                id="contact-name-error"
-                className="mt-2 min-h-5 text-xs leading-5 text-[#F0B957]"
-              >
+              <p id="contact-name-error" className={errorTextClass}>
                 {errors.name}
               </p>
             </div>
 
             <div>
-              <label
-                htmlFor="contact-email"
-                className="font-serif text-sm text-[#f4b94f]"
-              >
+              <label htmlFor="contact-email" className={labelClass}>
                 Email
               </label>
               <input
@@ -154,21 +182,34 @@ export function Contact() {
                 placeholder="you@example.com"
                 aria-invalid={Boolean(errors.email)}
                 aria-describedby="contact-email-error"
-                className={`${inputBaseClass} ${errors.email ? errorClass : ""}`}
+                required
+                disabled={status === "submitting"}
+                className={`${fieldClass} ${errors.email ? errorClass : ""}`}
               />
-              <p
-                id="contact-email-error"
-                className="mt-2 min-h-5 text-xs leading-5 text-[#F0B957]"
-              >
+              <p id="contact-email-error" className={errorTextClass}>
                 {errors.email}
               </p>
             </div>
 
             <div className="md:col-span-2">
-              <label
-                htmlFor="contact-message"
-                className="font-serif text-sm text-[#f4b94f]"
-              >
+              <label htmlFor="contact-phone" className={labelClass}>
+                Phone <span className="text-[#f8f4ec]/45">(optional)</span>
+              </label>
+              <input
+                id="contact-phone"
+                name="phone"
+                type="tel"
+                autoComplete="tel"
+                value={values.phone}
+                onChange={(event) => updateField("phone", event.target.value)}
+                placeholder="Your phone number"
+                disabled={status === "submitting"}
+                className={fieldClass}
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label htmlFor="contact-message" className={labelClass}>
                 Message
               </label>
               <textarea
@@ -182,23 +223,23 @@ export function Contact() {
                 rows={5}
                 aria-invalid={Boolean(errors.message)}
                 aria-describedby="contact-message-error"
-                className={`${inputBaseClass} min-h-[8rem] resize-y ${errors.message ? errorClass : ""}`}
+                required
+                disabled={status === "submitting"}
+                className={`${fieldClass} min-h-[8.25rem] resize-y ${errors.message ? errorClass : ""}`}
               />
-              <p
-                id="contact-message-error"
-                className="mt-2 min-h-5 text-xs leading-5 text-[#F0B957]"
-              >
+              <p id="contact-message-error" className={errorTextClass}>
                 {errors.message}
               </p>
             </div>
           </div>
 
-          <div className="mt-7 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          <div className="mt-7 flex flex-col items-center gap-4 sm:flex-row sm:items-center">
             <button
               type="submit"
-              className="group inline-flex min-h-14 w-full max-w-[18rem] items-center justify-center gap-4 rounded-full bg-[#F0B957] px-8 py-4 font-serif text-[15px] text-[#030c1c] transition-colors duration-300 hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#F0B957] focus:ring-offset-4 focus:ring-offset-[#030c1c] sm:w-auto"
+              disabled={status === "submitting"}
+              className="group inline-flex min-h-14 w-full max-w-[18rem] items-center justify-center gap-4 rounded-full bg-[#F0B957] px-8 py-4 font-serif text-[15px] text-[#030c1c] transition duration-300 hover:-translate-y-0.5 hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#F0B957] focus:ring-offset-4 focus:ring-offset-[#030c1c] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
             >
-              <span>Send Message</span>
+              <span>{status === "submitting" ? "Preparing" : "Send Message"}</span>
               <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
@@ -220,3 +261,4 @@ export function Contact() {
     </section>
   );
 }
+

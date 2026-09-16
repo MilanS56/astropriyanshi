@@ -34,10 +34,10 @@ export function About() {
           </p>
 
           <a
-            href="/consultations"
+            href="/about"
             className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-[#F0B957] px-7 font-serif text-sm text-[#030c1c] transition-colors duration-300 hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#030c1c] focus:ring-offset-4 focus:ring-offset-[#f8f4ec]"
           >
-            Explore Consultations&nbsp;&rarr;
+            Explore About Priyanshii&nbsp;&rarr;
           </a>
         </div>
 
@@ -64,3 +64,4 @@ export function About() {
     </section>
   );
 }
+
