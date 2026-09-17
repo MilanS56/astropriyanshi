@@ -237,7 +237,7 @@ export function Contact() {
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="group inline-flex min-h-14 w-full max-w-[18rem] items-center justify-center gap-4 rounded-full bg-[#F0B957] px-8 py-4 font-serif text-[15px] text-[#030c1c] transition duration-300 hover:-translate-y-0.5 hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#F0B957] focus:ring-offset-4 focus:ring-offset-[#030c1c] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+              className="group mx-auto inline-flex min-h-14 w-full max-w-[18rem] items-center justify-center gap-4 rounded-full bg-[#F0B957] px-8 py-4 font-serif text-[15px] text-[#030c1c] transition duration-300 hover:-translate-y-0.5 hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#F0B957] focus:ring-offset-4 focus:ring-offset-[#030c1c] disabled:cursor-not-allowed disabled:opacity-70 sm:mx-0 sm:w-auto"
             >
               <span>{status === "submitting" ? "Preparing" : "Send Message"}</span>
               <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">
@@ -246,7 +246,7 @@ export function Contact() {
             </button>
 
             <p
-              className="min-h-6 text-sm leading-6 text-[#f8f4ec]/62"
+              className="min-h-6 text-center text-sm leading-6 text-[#f8f4ec]/62 sm:text-left"
               aria-live="polite"
             >
               {status === "success"

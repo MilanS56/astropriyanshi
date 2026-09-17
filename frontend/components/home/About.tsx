@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function About() {
   return (
     <section
@@ -21,24 +23,22 @@ export function About() {
             id="about-priyanshii-heading"
             className="font-serif text-[2.35rem] leading-[1.08] tracking-[-0.02em] text-[#030c1c] min-[390px]:text-[2.7rem] md:text-[2.7rem] lg:text-[3.2rem] xl:text-[3.5rem]"
           >
-            Astrology that brings
-            <br />
-            clarity to your journey.
+            A thoughtful approach to understanding life&apos;s questions.
           </h2>
 
           <p className="mt-6 max-w-[36rem] text-base leading-8 text-[#030c1c]/75 md:text-[17px] md:leading-8">
-            Astrology offers a different way of looking at life&apos;s patterns,
-            possibilities and turning points. With a personalized approach,
-            Priyanshii helps you understand your journey and move forward with
-            greater clarity and confidence.
+            Through Vedic Astrology, Lal Kitab and Numerology, Priyanshii
+            combines continuous learning with thoughtful analysis to help
+            people explore their situations with greater clarity and
+            understanding.
           </p>
 
-          <a
+          <Link
             href="/about"
             className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-[#F0B957] px-7 font-serif text-sm text-[#030c1c] transition-colors duration-300 hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#030c1c] focus:ring-offset-4 focus:ring-offset-[#f8f4ec]"
           >
             Explore About Priyanshii&nbsp;&rarr;
-          </a>
+          </Link>
         </div>
 
         <div className="relative mx-auto w-full max-w-[32rem] md:max-w-none">
@@ -64,4 +64,3 @@ export function About() {
     </section>
   );
 }
-

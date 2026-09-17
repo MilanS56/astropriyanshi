@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
@@ -112,16 +113,32 @@ export default function AboutPage() {
               <h2 className="font-serif text-[2.35rem] leading-[1.08] tracking-[-0.02em] md:text-[3.2rem]">
                 A path shaped by study, practice and experience.
               </h2>
-              <div className="relative grid gap-8 md:grid-cols-3 md:gap-0">
-                <div className="absolute left-[1.15rem] top-5 hidden h-px w-[calc(100%-2.3rem)] bg-[#F0B957]/25 md:block" />
+              <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] md:items-start md:gap-4">
                 {timeline.map((item, index) => (
-                  <article key={item.year} className="relative border-l border-[#F0B957]/20 pl-8 md:border-l-0 md:pl-0 md:pr-8">
-                    <span className="absolute -left-[0.34rem] top-1 h-3 w-3 rounded-full bg-[#F0B957] md:left-0 md:top-[1.05rem]" />
-                    <p className="font-serif text-4xl text-[#F0B957] md:text-[2.8rem]">{item.year}</p>
-                    <h3 className="mt-4 font-serif text-xl leading-7 text-[#f8f4ec] md:text-2xl">{item.title}</h3>
-                    <p className="mt-3 max-w-sm text-sm leading-7 text-[#f8f4ec]/68 md:text-base">{item.text}</p>
-                    {index < timeline.length - 1 && <div className="mt-8 h-px bg-[#f8f4ec]/10 md:hidden" />}
-                  </article>
+                  <div key={item.year} className="contents">
+                    <article className="relative py-2 md:py-0">
+                      <p className="font-serif text-4xl leading-none text-[#F0B957] md:text-[2.65rem] lg:text-[2.8rem]">
+                        {item.year}
+                      </p>
+                      <h3 className="mt-4 font-serif text-xl leading-7 text-[#f8f4ec] md:text-[1.35rem] lg:text-2xl">
+                        {item.title}
+                      </h3>
+                      <p className="mt-3 max-w-sm text-sm leading-7 text-[#f8f4ec]/68 md:text-[15px] lg:text-base">
+                        {item.text}
+                      </p>
+                    </article>
+
+                    {index < timeline.length - 1 && (
+                      <div
+                        aria-hidden="true"
+                        className="flex items-center justify-center py-1 md:pt-1.5"
+                      >
+                        <span className="flex h-9 w-9 rotate-90 items-center justify-center rounded-full border border-[#F0B957]/30 font-serif text-xl text-[#F0B957] md:rotate-0">
+                          &rarr;
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
@@ -215,9 +232,9 @@ export default function AboutPage() {
             <p className="mx-auto mt-6 max-w-[46rem] text-base leading-8 text-[#030c1c]/72 md:text-[17px]">
               If you are looking for someone to understand your concerns through the perspective of Vedic Astrology, Lal Kitab or Numerology, I am here to guide you in exploring your situation with greater clarity and understanding.
             </p>
-            <a href="/consultations" className="mt-8 inline-flex min-h-14 items-center justify-center rounded-full bg-[#F0B957] px-8 font-serif text-[15px] text-[#030c1c] transition duration-300 hover:-translate-y-0.5 hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#030c1c] focus:ring-offset-4 focus:ring-offset-[#f8f4ec]">
+            <Link href="/consultations" className="mt-8 inline-flex min-h-14 items-center justify-center rounded-full bg-[#F0B957] px-8 font-serif text-[15px] text-[#030c1c] transition duration-300 hover:-translate-y-0.5 hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#030c1c] focus:ring-offset-4 focus:ring-offset-[#f8f4ec]">
               Book a Consultation&nbsp;&rarr;
-            </a>
+            </Link>
           </div>
         </section>
       </main>

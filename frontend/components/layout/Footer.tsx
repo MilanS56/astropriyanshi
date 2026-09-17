@@ -1,8 +1,10 @@
+import Link from "next/link";
+
 const footerLinks = [
   { label: "Home", href: "/" },
-  { label: "About", href: "#about-priyanshii-heading" },
+  { label: "About", href: "/about" },
   { label: "Consultations", href: "/consultations" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function Footer() {
@@ -11,7 +13,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1440px]">
         <div className="grid gap-6 md:grid-cols-[auto_1fr] md:items-center md:gap-x-10 md:gap-y-5 lg:grid-cols-[1fr_auto_1fr] lg:gap-x-12">
           <div className="justify-self-start">
-            <a
+            <Link
               href="/"
               className="inline-flex items-center gap-2.5"
               aria-label="Priyanshii Aasttro home"
@@ -31,7 +33,7 @@ export function Footer() {
                   ASTROLOGY CONSULTANT
                 </span>
               </span>
-            </a>
+            </Link>
           </div>
 
           <p className="max-w-[18rem] text-sm leading-6 text-[#030c1c]/68 md:col-span-2 md:max-w-md lg:col-span-1 lg:max-w-none lg:justify-self-center lg:whitespace-nowrap lg:text-center">
@@ -43,13 +45,13 @@ export function Footer() {
             className="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-[#030c1c]/75 min-[360px]:gap-x-6 min-[360px]:gap-y-2 sm:gap-x-8 md:justify-end lg:flex-nowrap lg:gap-x-8 lg:justify-self-end"
           >
             {footerLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
                 className="rounded-full py-2 font-serif transition-colors duration-300 hover:text-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#F0B957] focus:ring-offset-4 focus:ring-offset-[#f8f4ec]"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>

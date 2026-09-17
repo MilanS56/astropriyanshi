@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -8,7 +10,7 @@ const navItems = [
   { label: "Consultations", href: "/consultations" },
   { label: "Insights", href: "/insights" },
   { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 const drawerItems = navItems.filter((item) =>
@@ -19,6 +21,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const [navHeight, setNavHeight] = useState(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     const navElement = navRef.current;
@@ -67,7 +70,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-[90] border-b border-[#F4EDE2]/10 bg-[#030c1c]/72 backdrop-blur-md xl:absolute xl:border-b-0 xl:bg-transparent xl:backdrop-blur-0">
       <nav ref={navRef} className="relative z-[90] mx-auto flex max-w-[1600px] items-center justify-between px-6 py-5 lg:px-10 xl:px-14">
         {/* Brand */}
-        <a
+        <Link
           href="/"
           className="flex shrink-0 items-center gap-2 whitespace-nowrap sm:gap-3"
           aria-label="Priyanshii Aasttro home"
@@ -89,37 +92,46 @@ export default function Navbar() {
               <span className="hidden h-px w-7 bg-[#A87932] sm:block" />
             </div>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 xl:flex xl:gap-10">
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className={`relative py-2 font-serif text-[15px] transition-colors ${
-                item.label === "Home"
-                  ? "text-[#F2C875]"
-                  : "text-[#F4EDE2] hover:text-[#F2C875]"
-              }`}
-            >
-              {item.label}
+          {navItems.map((item) => {
+            const route = item.href.split("#")[0];
+            const isActive =
+              route === "/"
+                ? pathname === "/"
+                : Boolean(route && pathname.startsWith(route));
 
-              {item.label === "Home" && (
-                <span className="absolute -bottom-1 left-0 h-px w-full bg-[#F2C875]" />
-              )}
-            </a>
-          ))}
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                aria-current={isActive ? "page" : undefined}
+                className={`relative py-2 font-serif text-[15px] transition-colors ${
+                  isActive
+                    ? "text-[#F2C875]"
+                    : "text-[#F4EDE2] hover:text-[#F2C875]"
+                }`}
+              >
+                {item.label}
+
+                {isActive && (
+                  <span className="absolute -bottom-1 left-0 h-px w-full bg-[#F2C875]" />
+                )}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Desktop CTA */}
-        <a
+        <Link
           href="/consultations"
           className="hidden shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-[#B98942] px-7 py-3 text-sm text-[#F4EDE2] transition-all duration-300 hover:bg-[#B98942]/10 hover:text-[#F2C875] xl:flex"
         >
           <span className="flex items-center"><img src="/images/decorators/calendar.svg" alt="Calendar" aria-hidden="true" className="h-5 w-5 object-contain" /></span>
           <span className="font-serif">Book a Session</span>
-        </a>
+        </Link>
 
         {/* Mobile Menu Button */}
         <button
@@ -175,7 +187,7 @@ export default function Navbar() {
 
           <div className="flex flex-col border-y border-[#F4EDE2]/10">
             {drawerItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
                 tabIndex={isMenuOpen ? 0 : -1}
@@ -186,11 +198,11 @@ export default function Navbar() {
                 <span className="text-base text-[#F2C875] opacity-60 transition-transform duration-300 group-hover:translate-x-1">
                   →
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
 
-          <a
+          <Link
             href="/consultations"
             tabIndex={isMenuOpen ? 0 : -1}
             onClick={() => setIsMenuOpen(false)}
@@ -198,7 +210,7 @@ export default function Navbar() {
           >
             Book a Consultation
             <span className="ml-3 text-lg">→</span>
-          </a>
+          </Link>
         </div>
       </aside>
     </header>
