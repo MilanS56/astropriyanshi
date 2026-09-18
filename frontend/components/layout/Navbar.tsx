@@ -99,9 +99,9 @@ export default function Navbar() {
           {navItems.map((item) => {
             const route = item.href.split("#")[0];
             const isActive =
-              route === "/"
+              item.href === "/"
                 ? pathname === "/"
-                : Boolean(route && pathname.startsWith(route));
+                : Boolean(route && route !== "/" && pathname.startsWith(route));
 
             return (
               <Link
