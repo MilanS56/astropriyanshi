@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ConsultationEnquiryForm } from "@/components/consultations/ConsultationEnquiryForm";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
-import { getConsultationById } from "@/lib/consultations";
+import { getConsultationsByIds } from "@/lib/consultations";
 
 export const metadata: Metadata = {
   title: "Consultation Enquiry | Priyanshii Aasttro",
@@ -12,15 +12,18 @@ export const metadata: Metadata = {
 };
 
 type ConsultationContactPageProps = {
-  searchParams: Promise<{ service?: string | string[] }>;
+  searchParams: Promise<{ services?: string | string[] }>;
 };
 
 export default async function ConsultationContactPage({
   searchParams,
 }: ConsultationContactPageProps) {
-  const serviceParam = (await searchParams).service;
-  const serviceId = typeof serviceParam === "string" ? serviceParam : undefined;
-  const consultation = getConsultationById(serviceId);
+  const servicesParam = (await searchParams).services;
+  const serviceIds =
+    typeof servicesParam === "string"
+      ? servicesParam.split(",").map((id) => id.trim()).filter(Boolean)
+      : [];
+  const selectedConsultations = getConsultationsByIds(serviceIds);
 
   return (
     <>
@@ -30,7 +33,7 @@ export default async function ConsultationContactPage({
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(240,185,87,0.11),transparent_28%),linear-gradient(180deg,rgba(248,244,236,0.035),transparent_48%)]" />
 
           <div className="relative z-10 mx-auto max-w-[1440px]">
-            {!consultation ? (
+            {selectedConsultations.length === 0 ? (
               <div className="mx-auto max-w-2xl text-center">
                 <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-[#f4b94f] md:text-[13px]">
                   CONSULTATION ENQUIRY
@@ -61,16 +64,22 @@ export default async function ConsultationContactPage({
 
                   <div className="mt-8 border-l-2 border-[#F0B957] pl-5">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#F0B957]">
-                      Selected consultation
+                      Selected consultations
                     </p>
-                    <p className="mt-3 font-serif text-2xl text-[#f8f4ec]">
-                      {consultation.name}
-                    </p>
-                    {consultation.hindiName && (
-                      <p lang="hi" className="mt-2 text-base text-[#f8f4ec]/62">
-                        {consultation.hindiName}
-                      </p>
-                    )}
+                    <ul className="mt-3 divide-y divide-[#f8f4ec]/10">
+                      {selectedConsultations.map((consultation) => (
+                        <li key={consultation.id} className="py-3 first:pt-0">
+                          <p className="font-serif text-xl text-[#f8f4ec] md:text-2xl">
+                            {consultation.name}
+                          </p>
+                          {consultation.hindiName && (
+                            <p lang="hi" className="mt-1 text-sm text-[#f8f4ec]/62 md:text-base">
+                              {consultation.hindiName}
+                            </p>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
                   <Link
@@ -81,7 +90,7 @@ export default async function ConsultationContactPage({
                   </Link>
                 </div>
 
-                <ConsultationEnquiryForm consultation={consultation} />
+                <ConsultationEnquiryForm consultations={selectedConsultations} />
               </div>
             )}
           </div>

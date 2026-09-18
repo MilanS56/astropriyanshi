@@ -48,6 +48,11 @@ export function Services() {
                     {service.hindiName}
                   </span>
                 )}
+                {service.description && (
+                  <span className="mt-2 block text-sm leading-6 text-[#030c1c]/58">
+                    {service.description}
+                  </span>
+                )}
               </span>
             </li>
           ))}

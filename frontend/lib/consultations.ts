@@ -3,6 +3,7 @@ export type Consultation = {
   number: string;
   name: string;
   hindiName?: string;
+  description?: string;
 };
 
 export const consultations: Consultation[] = [
@@ -67,8 +68,15 @@ export const consultations: Consultation[] = [
     hindiName: "उपाय परामर्श",
   },
   {
-    id: "other-matters",
+    id: "full-horoscope",
     number: "11",
+    name: "Full Horoscope Consultation",
+    description:
+      "An all-in-one consultation covering career, finance, marriage, children and future.",
+  },
+  {
+    id: "other-matters",
+    number: "12",
     name: "Other Matters",
   },
 ];
@@ -77,4 +85,14 @@ export function getConsultationById(id: string | null | undefined) {
   if (!id) return undefined;
 
   return consultations.find((consultation) => consultation.id === id);
+}
+
+export function getConsultationsByIds(ids: string[]) {
+  const uniqueIds = [...new Set(ids)];
+
+  return uniqueIds
+    .map((id) => getConsultationById(id))
+    .filter((consultation): consultation is Consultation =>
+      Boolean(consultation),
+    );
 }

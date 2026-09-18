@@ -1,9 +1,10 @@
-import { getConsultationById } from "@/lib/consultations";
+import { getConsultationsByIds } from "@/lib/consultations";
 
 export type ConsultationEnquiry = {
-  consultationId: string;
+  consultationIds: string[];
   name: string;
   email: string;
+  phone: string;
   message: string;
 };
 
@@ -20,6 +21,7 @@ export const enquiryLimits = {
   nameMin: 2,
   nameMax: 100,
   emailMax: 254,
+  phoneMax: 30,
   messageMin: 10,
   messageMax: 4000,
 } as const;
@@ -28,6 +30,19 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function readString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function readStringArray(value: unknown) {
+  if (!Array.isArray(value)) return [];
+
+  return [
+    ...new Set(
+      value
+        .filter((item): item is string => typeof item === "string")
+        .map((item) => item.trim())
+        .filter(Boolean),
+    ),
+  ];
 }
 
 export function validateConsultationEnquiry(input: unknown): {
@@ -40,15 +55,20 @@ export function validateConsultationEnquiry(input: unknown): {
       : {};
 
   const data: ConsultationEnquiry = {
-    consultationId: readString(source.consultationId),
+    consultationIds: readStringArray(source.consultationIds),
     name: readString(source.name),
     email: readString(source.email),
+    phone: readString(source.phone),
     message: readString(source.message),
   };
   const errors: ConsultationEnquiryErrors = {};
 
-  if (!getConsultationById(data.consultationId)) {
-    errors.consultationId = "Please choose a valid consultation.";
+  if (
+    data.consultationIds.length === 0 ||
+    getConsultationsByIds(data.consultationIds).length !==
+      data.consultationIds.length
+  ) {
+    errors.consultationIds = "Please choose at least one valid consultation.";
   }
 
   if (
@@ -63,6 +83,18 @@ export function validateConsultationEnquiry(input: unknown): {
     !emailPattern.test(data.email)
   ) {
     errors.email = "Please enter a valid email address.";
+  }
+
+  const phoneDigits = data.phone.replace(/\D/g, "");
+  const phonePattern = /^\+?[\d\s()-]+$/;
+
+  if (
+    data.phone.length > enquiryLimits.phoneMax ||
+    !phonePattern.test(data.phone) ||
+    phoneDigits.length < 7 ||
+    phoneDigits.length > 15
+  ) {
+    errors.phone = "Please enter a valid phone number.";
   }
 
   if (

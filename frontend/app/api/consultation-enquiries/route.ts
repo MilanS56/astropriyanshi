@@ -2,7 +2,7 @@ import {
   type ConsultationEnquiryApiResponse,
   validateConsultationEnquiry,
 } from "@/lib/consultation-enquiries";
-import { getConsultationById } from "@/lib/consultations";
+import { getConsultationsByIds } from "@/lib/consultations";
 
 const noStoreHeaders = { "Cache-Control": "no-store" };
 
@@ -33,9 +33,9 @@ export async function POST(request: Request) {
     );
   }
 
-  const consultation = getConsultationById(validation.data.consultationId);
+  const consultations = getConsultationsByIds(validation.data.consultationIds);
 
-  if (!consultation) {
+  if (consultations.length !== validation.data.consultationIds.length) {
     return Response.json(
       {
         success: false,
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
   }
 
   // TODO: Add rate limiting before connecting an external delivery provider.
-  // TODO: Use the resolved consultation to send the Priyanshii notification
+  // TODO: Use the resolved consultations to send the Priyanshii notification
   // and client acknowledgement through Resend.
   return Response.json(
     {

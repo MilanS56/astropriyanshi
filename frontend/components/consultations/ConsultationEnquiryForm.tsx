@@ -11,20 +11,24 @@ import {
 } from "@/lib/consultation-enquiries";
 
 type ConsultationEnquiryFormProps = {
-  consultation: Consultation;
+  consultations: Consultation[];
 };
 
-type FormValues = Pick<ConsultationEnquiry, "name" | "email" | "message">;
+type FormValues = Pick<
+  ConsultationEnquiry,
+  "name" | "email" | "phone" | "message"
+>;
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
 const initialValues: FormValues = {
   name: "",
   email: "",
+  phone: "",
   message: "",
 };
 
 export function ConsultationEnquiryForm({
-  consultation,
+  consultations,
 }: ConsultationEnquiryFormProps) {
   const [values, setValues] = useState<FormValues>(initialValues);
   const [errors, setErrors] = useState<ConsultationEnquiryErrors>({});
@@ -42,7 +46,7 @@ export function ConsultationEnquiryForm({
     event.preventDefault();
 
     const payload: ConsultationEnquiry = {
-      consultationId: consultation.id,
+      consultationIds: consultations.map((consultation) => consultation.id),
       ...values,
     };
     const validation = validateConsultationEnquiry(payload);
@@ -152,6 +156,29 @@ export function ConsultationEnquiryForm({
             />
             <p id="enquiry-email-error" className={errorTextClass}>
               {errors.email}
+            </p>
+          </div>
+
+          <div className="md:col-span-2">
+            <label htmlFor="enquiry-phone" className={labelClass}>
+              Phone
+            </label>
+            <input
+              id="enquiry-phone"
+              name="phone"
+              type="tel"
+              autoComplete="tel"
+              value={values.phone}
+              onChange={(event) => updateField("phone", event.target.value)}
+              placeholder="Your phone number"
+              maxLength={enquiryLimits.phoneMax}
+              required
+              aria-invalid={Boolean(errors.phone)}
+              aria-describedby="enquiry-phone-error"
+              className={`${fieldClass} ${errors.phone ? errorClass : ""}`}
+            />
+            <p id="enquiry-phone-error" className={errorTextClass}>
+              {errors.phone}
             </p>
           </div>
         </div>
