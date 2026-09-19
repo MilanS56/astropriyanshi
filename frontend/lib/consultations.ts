@@ -6,6 +6,8 @@ export type Consultation = {
   description?: string;
 };
 
+export const FULL_HOROSCOPE_CONSULTATION_ID = "full-horoscope";
+
 export const consultations: Consultation[] = [
   {
     id: "marriage",
@@ -68,7 +70,7 @@ export const consultations: Consultation[] = [
     hindiName: "उपाय परामर्श",
   },
   {
-    id: "full-horoscope",
+    id: FULL_HOROSCOPE_CONSULTATION_ID,
     number: "11",
     name: "Full Horoscope Consultation",
     description:
@@ -95,4 +97,14 @@ export function getConsultationsByIds(ids: string[]) {
     .filter((consultation): consultation is Consultation =>
       Boolean(consultation),
     );
+}
+
+export function normalizeConsultationSelectionIds(ids: string[]) {
+  const validIds = getConsultationsByIds(ids).map(
+    (consultation) => consultation.id,
+  );
+
+  return validIds.includes(FULL_HOROSCOPE_CONSULTATION_ID)
+    ? [FULL_HOROSCOPE_CONSULTATION_ID]
+    : validIds;
 }

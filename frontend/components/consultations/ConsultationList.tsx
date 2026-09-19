@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { consultations, getConsultationsByIds } from "@/lib/consultations";
+import {
+  consultations,
+  FULL_HOROSCOPE_CONSULTATION_ID,
+  getConsultationsByIds,
+} from "@/lib/consultations";
 import {
   clearSelectedConsultationIds,
   getSelectedConsultationIds,
@@ -11,12 +15,9 @@ import {
 
 export function ConsultationList() {
   const [selectedConsultationIds, setSelectedConsultationIds] = useState<string[]>([]);
-  const [isSelectionOpen, setIsSelectionOpen] = useState(false);
   const selectedConsultations = getConsultationsByIds(selectedConsultationIds);
   const selectedCount = selectedConsultations.length;
   const continueHref = `/consultations/contact?services=${selectedConsultationIds.join(",")}`;
-  const summaryNames = selectedConsultations.slice(0, 2).map((item) => item.name).join(" · ");
-  const remainingCount = Math.max(selectedCount - 2, 0);
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
@@ -28,9 +29,18 @@ export function ConsultationList() {
 
   function toggleConsultation(consultationId: string) {
     setSelectedConsultationIds((current) => {
-      const nextIds = current.includes(consultationId)
-        ? current.filter((id) => id !== consultationId)
-        : [...current, consultationId];
+      let nextIds: string[];
+
+      if (consultationId === FULL_HOROSCOPE_CONSULTATION_ID) {
+        nextIds = current.includes(consultationId) ? [] : [consultationId];
+      } else {
+        const specificConsultations = current.filter(
+          (id) => id !== FULL_HOROSCOPE_CONSULTATION_ID,
+        );
+        nextIds = specificConsultations.includes(consultationId)
+          ? specificConsultations.filter((id) => id !== consultationId)
+          : [...specificConsultations, consultationId];
+      }
 
       saveSelectedConsultationIds(nextIds);
       return nextIds;
@@ -48,7 +58,6 @@ export function ConsultationList() {
 
   function clearConsultations() {
     setSelectedConsultationIds([]);
-    setIsSelectionOpen(false);
     clearSelectedConsultationIds();
   }
 
@@ -135,60 +144,34 @@ export function ConsultationList() {
           style={{ bottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
         >
           <div className="relative rounded-2xl border border-[#F0B957]/30 bg-[#030c1c]/[0.97] text-[#f8f4ec] shadow-[0_18px_60px_rgba(3,12,28,0.3)] backdrop-blur-md">
-            {isSelectionOpen && (
-              <div
-                id="selected-consultations-panel"
-                className="absolute inset-x-0 bottom-[calc(100%+0.5rem)] max-h-52 overflow-y-auto rounded-2xl border border-[#F0B957]/25 bg-[#030c1c] p-4 shadow-[0_16px_45px_rgba(3,12,28,0.28)] md:p-5"
-              >
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#F0B957]">
-                  Your consultations
+            <div className="grid gap-3 px-4 py-3.5 sm:grid-cols-[1fr_auto] sm:items-center sm:px-5 md:px-6">
+              <div className="min-w-0">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#F0B957] md:text-xs">
+                  {selectedCount} consultation{selectedCount === 1 ? "" : "s"} selected
                 </p>
-                <ul className="mt-3 divide-y divide-[#f8f4ec]/10">
+                <ul
+                  aria-label="Selected consultations"
+                  className="mt-2 flex max-w-full gap-2 overflow-x-auto pb-1 [scrollbar-width:thin] [scrollbar-color:rgba(240,185,87,0.35)_transparent]"
+                >
                   {selectedConsultations.map((consultation) => (
-                    <li key={consultation.id} className="flex items-center justify-between gap-4 py-3">
-                      <span className="min-w-0">
-                        <span className="block truncate font-serif text-sm md:text-base">
-                          {consultation.name}
-                        </span>
-                        {consultation.hindiName && (
-                          <span lang="hi" className="mt-0.5 block text-xs text-[#f8f4ec]/55">
-                            {consultation.hindiName}
-                          </span>
-                        )}
+                    <li
+                      key={consultation.id}
+                      className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#f8f4ec]/15 bg-[#f8f4ec]/[0.04] py-1 pl-3 pr-1.5"
+                    >
+                      <span className="max-w-48 truncate text-xs text-[#f8f4ec]/75 md:max-w-60 md:text-sm">
+                        {consultation.name}
                       </span>
                       <button
                         type="button"
                         aria-label={`Remove ${consultation.name}`}
                         onClick={() => removeConsultation(consultation.id)}
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#f8f4ec]/15 text-lg text-[#f8f4ec]/65 transition-colors hover:border-[#F0B957]/50 hover:text-[#F0B957] focus:outline-none focus:ring-2 focus:ring-[#F0B957]"
+                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-base text-[#f8f4ec]/60 transition-colors hover:bg-[#F0B957]/12 hover:text-[#F0B957] focus:outline-none focus:ring-2 focus:ring-[#F0B957]"
                       >
                         ×
                       </button>
                     </li>
                   ))}
                 </ul>
-              </div>
-            )}
-
-            <div className="grid gap-3 px-4 py-3.5 sm:grid-cols-[1fr_auto] sm:items-center sm:px-5 md:px-6">
-              <div className="min-w-0">
-                <button
-                  type="button"
-                  aria-expanded={isSelectionOpen}
-                  aria-controls="selected-consultations-panel"
-                  onClick={() => setIsSelectionOpen((open) => !open)}
-                  className="flex items-center gap-2 rounded-lg text-left focus:outline-none focus:ring-2 focus:ring-[#F0B957]"
-                >
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#F0B957] md:text-xs">
-                    {selectedCount} consultation{selectedCount === 1 ? "" : "s"} selected
-                  </span>
-                  <span className="text-xs text-[#F0B957]" aria-hidden="true">
-                    {isSelectionOpen ? "↓" : "↑"}
-                  </span>
-                </button>
-                <p className="mt-1 truncate text-sm text-[#f8f4ec]/70">
-                  {summaryNames}{remainingCount > 0 ? ` · +${remainingCount} more` : ""}
-                </p>
               </div>
 
               <div className="grid grid-cols-[auto_1fr] items-center gap-2.5 sm:flex sm:gap-3">

@@ -1,4 +1,7 @@
-import { getConsultationsByIds } from "@/lib/consultations";
+import {
+  getConsultationsByIds,
+  normalizeConsultationSelectionIds,
+} from "@/lib/consultations";
 
 export type ConsultationEnquiry = {
   consultationIds: string[];
@@ -69,6 +72,12 @@ export function validateConsultationEnquiry(input: unknown): {
       data.consultationIds.length
   ) {
     errors.consultationIds = "Please choose at least one valid consultation.";
+  } else if (
+    normalizeConsultationSelectionIds(data.consultationIds).length !==
+    data.consultationIds.length
+  ) {
+    errors.consultationIds =
+      "Full Horoscope Consultation must be selected on its own.";
   }
 
   if (

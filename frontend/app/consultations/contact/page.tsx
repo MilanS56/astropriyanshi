@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ConsultationEnquiryForm } from "@/components/consultations/ConsultationEnquiryForm";
+import { SelectedEnquiryConsultations } from "@/components/consultations/SelectedEnquiryConsultations";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
-import { getConsultationsByIds } from "@/lib/consultations";
+import {
+  getConsultationsByIds,
+  normalizeConsultationSelectionIds,
+} from "@/lib/consultations";
 
 export const metadata: Metadata = {
   title: "Consultation Enquiry | Priyanshii Aasttro",
@@ -23,7 +27,9 @@ export default async function ConsultationContactPage({
     typeof servicesParam === "string"
       ? servicesParam.split(",").map((id) => id.trim()).filter(Boolean)
       : [];
-  const selectedConsultations = getConsultationsByIds(serviceIds);
+  const selectedConsultations = getConsultationsByIds(
+    normalizeConsultationSelectionIds(serviceIds),
+  );
 
   return (
     <>
@@ -66,20 +72,9 @@ export default async function ConsultationContactPage({
                     <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#F0B957]">
                       Selected consultations
                     </p>
-                    <ul className="mt-3 divide-y divide-[#f8f4ec]/10">
-                      {selectedConsultations.map((consultation) => (
-                        <li key={consultation.id} className="py-3 first:pt-0">
-                          <p className="font-serif text-xl text-[#f8f4ec] md:text-2xl">
-                            {consultation.name}
-                          </p>
-                          {consultation.hindiName && (
-                            <p lang="hi" className="mt-1 text-sm text-[#f8f4ec]/62 md:text-base">
-                              {consultation.hindiName}
-                            </p>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
+                    <SelectedEnquiryConsultations
+                      consultations={selectedConsultations}
+                    />
                   </div>
 
                   <Link

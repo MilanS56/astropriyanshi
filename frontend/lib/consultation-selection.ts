@@ -1,4 +1,4 @@
-import { getConsultationsByIds } from "@/lib/consultations";
+import { normalizeConsultationSelectionIds } from "@/lib/consultations";
 
 export const CONSULTATION_SELECTION_STORAGE_KEY =
   "astro-priyanshii:selected-consultations:v1";
@@ -12,7 +12,7 @@ function validateConsultationIds(value: unknown) {
 
   const stringIds = value.filter((id): id is string => typeof id === "string");
 
-  return getConsultationsByIds(stringIds).map((consultation) => consultation.id);
+  return normalizeConsultationSelectionIds(stringIds);
 }
 
 export function getSelectedConsultationIds() {
