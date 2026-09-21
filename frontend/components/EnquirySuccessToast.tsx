@@ -14,7 +14,17 @@ export function EnquirySuccessToast() {
   if (!visible) return null;
 
   return createPortal(
-    <div className="fixed right-4 top-6 z-[100] flex w-[calc(100%-2rem)] max-w-md items-start gap-3 rounded-2xl border border-[#F0B957]/40 bg-[#030c1c] p-5 text-[#f8f4ec] shadow-xl sm:right-6">
+    <div
+      style={{
+        position: "fixed",
+        top: "max(1.5rem, env(safe-area-inset-top))",
+        right: "max(1rem, env(safe-area-inset-right))",
+        zIndex: 9999,
+        width: "calc(100vw - 2rem)",
+        maxWidth: "28rem",
+      }}
+      className="flex items-start gap-3 rounded-2xl border border-[#F0B957]/40 bg-[#030c1c] p-5 text-[#f8f4ec] shadow-xl"
+    >
       <span aria-hidden="true" className="text-xl text-[#F0B957]">✓</span>
       <p role="status" aria-live="polite" aria-atomic="true" className="flex-1 text-sm leading-6">
         Thank you. Your enquiry has been submitted successfully.

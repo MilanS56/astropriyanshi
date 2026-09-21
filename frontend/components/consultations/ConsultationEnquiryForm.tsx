@@ -1,7 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { EnquirySuccessToast } from "@/components/EnquirySuccessToast";
+import { FormEvent, useRef, useState } from "react";
 import type { Consultation } from "@/lib/consultations";
 import { clearSelectedConsultationIds } from "@/lib/consultation-selection";
 import {
@@ -14,6 +13,7 @@ import {
 
 type ConsultationEnquiryFormProps = {
   consultations: Consultation[];
+  onSuccess: () => void;
 };
 
 type FormValues = Pick<
@@ -31,12 +31,13 @@ const initialValues: FormValues = {
 
 export function ConsultationEnquiryForm({
   consultations,
+  onSuccess,
 }: ConsultationEnquiryFormProps) {
   const [values, setValues] = useState<FormValues>(initialValues);
   const [errors, setErrors] = useState<ConsultationEnquiryErrors>({});
   const [status, setStatus] = useState<FormStatus>("idle");
   const [statusMessage, setStatusMessage] = useState("");
-  const [successfulSubmissions, setSuccessfulSubmissions] = useState(0);
+  const submittingRef = useRef(false);
 
   function updateField(field: keyof FormValues, value: string) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -47,7 +48,7 @@ export function ConsultationEnquiryForm({
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (status === "submitting") return;
+    if (submittingRef.current) return;
 
     const payload: ConsultationEnquiry = {
       consultationIds: consultations.map((consultation) => consultation.id),
@@ -62,6 +63,7 @@ export function ConsultationEnquiryForm({
       return;
     }
 
+    submittingRef.current = true;
     setErrors({});
     setStatus("submitting");
     setStatusMessage("");
@@ -79,15 +81,14 @@ export function ConsultationEnquiryForm({
       }
 
       clearSelectedConsultationIds();
-      setStatus("success");
-      setSuccessfulSubmissions((count) => count + 1);
-      setStatusMessage("Your consultation enquiry has been submitted.");
-      setValues(initialValues);
+      onSuccess();
     } catch {
       setStatus("error");
       setStatusMessage(
         "We couldn't submit your enquiry right now. Please try again.",
       );
+    } finally {
+      submittingRef.current = false;
     }
   }
 
@@ -105,7 +106,6 @@ export function ConsultationEnquiryForm({
       noValidate
       className="relative overflow-hidden rounded-[1.25rem] border border-[#f8f4ec]/10 bg-[#f8f4ec]/[0.035] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.18)] sm:p-6 md:p-8"
     >
-      {successfulSubmissions > 0 && <EnquirySuccessToast key={successfulSubmissions} />}
       <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#F0B957]/45 to-transparent" />
 
       <fieldset disabled={isSubmitting}>

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ConsultationEnquiryForm } from "@/components/consultations/ConsultationEnquiryForm";
-import { SelectedEnquiryConsultations } from "@/components/consultations/SelectedEnquiryConsultations";
+import { ConsultationEnquiryContent } from "@/components/consultations/ConsultationEnquiryContent";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import {
@@ -59,34 +58,7 @@ export default async function ConsultationContactPage({
                 </Link>
               </div>
             ) : (
-              <div className="grid gap-10 lg:grid-cols-[0.42fr_0.58fr] lg:items-start lg:gap-14 xl:gap-20">
-                <div className="lg:sticky lg:top-32">
-                  <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-[#f4b94f] md:text-[13px]">
-                    CONSULTATION ENQUIRY
-                  </p>
-                  <h1 className="font-serif text-[2.65rem] leading-[1.06] tracking-[-0.03em] min-[390px]:text-[3rem] md:text-[3.65rem] lg:text-[4rem]">
-                    Tell us a little more about what you&apos;d like to explore.
-                  </h1>
-
-                  <div className="mt-8 border-l-2 border-[#F0B957] pl-5">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#F0B957]">
-                      Selected consultations
-                    </p>
-                    <SelectedEnquiryConsultations
-                      consultations={selectedConsultations}
-                    />
-                  </div>
-
-                  <Link
-                    href="/consultations"
-                    className="mt-7 inline-flex rounded-full py-2 text-sm text-[#f8f4ec]/65 underline decoration-[#F0B957]/45 underline-offset-4 transition-colors hover:text-[#F0B957] focus:outline-none focus:ring-2 focus:ring-[#F0B957]"
-                  >
-                    ← Change consultation
-                  </Link>
-                </div>
-
-                <ConsultationEnquiryForm consultations={selectedConsultations} />
-              </div>
+              <ConsultationEnquiryContent consultations={selectedConsultations} />
             )}
           </div>
         </section>
