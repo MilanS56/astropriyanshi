@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { EnquirySuccessToast } from "@/components/EnquirySuccessToast";
 
 type FormValues = {
   name: string;
@@ -35,7 +36,7 @@ function validateForm(values: FormValues) {
   const errors: FormErrors = {};
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (values.name.trim().length < 2) {
+  if (!values.name.trim()) {
     errors.name = "Please enter your name.";
   }
 
@@ -43,8 +44,8 @@ function validateForm(values: FormValues) {
     errors.email = "Please enter a valid email.";
   }
 
-  if (values.message.trim().length < 10) {
-    errors.message = "Please tell us a little about your enquiry.";
+  if (!values.message.trim()) {
+    errors.message = "Please enter your message.";
   }
 
   return errors;
@@ -54,28 +55,61 @@ export function Contact() {
   const [values, setValues] = useState<FormValues>(initialValues);
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<FormStatus>("idle");
+  const [feedback, setFeedback] = useState("");
+  const [successfulSubmissions, setSuccessfulSubmissions] = useState(0);
 
   function updateField(field: keyof FormValues, value: string) {
     setValues((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined }));
     setStatus("idle");
+    setFeedback("");
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (status === "submitting") return;
 
     const nextErrors = validateForm(values);
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
       setStatus("error");
+      setFeedback("Please review the fields below and correct the indicated errors.");
+      const firstInvalidField = Object.keys(nextErrors)[0];
+      event.currentTarget.querySelector<HTMLElement>(`[name="${firstInvalidField}"]`)?.focus();
       return;
     }
 
     setStatus("submitting");
+    setFeedback("Sending your message…");
 
-    // TODO: Connect this handler to the NestJS contact API once the Resend integration is ready.
-    setStatus("success");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: values.name.trim(),
+          email: values.email.trim(),
+          message: values.phone.trim()
+            ? `${values.message.trim()}\n\nPhone: ${values.phone.trim()}`
+            : values.message.trim(),
+        }),
+      });
+      const result = await response.json();
+
+      if (!response.ok || result?.success !== true) {
+        throw new Error("Contact submission failed");
+      }
+
+      setValues(initialValues);
+      setErrors({});
+      setStatus("success");
+      setSuccessfulSubmissions((count) => count + 1);
+      setFeedback("Thank you for reaching out. Your message has been sent successfully.");
+    } catch {
+      setStatus("error");
+      setFeedback("We couldn't send your message. Please try again. Your entered details have been kept.");
+    }
   }
 
   const fieldClass =
@@ -91,6 +125,7 @@ export function Contact() {
       aria-labelledby="contact-heading"
       className="relative isolate overflow-hidden bg-[#030c1c] px-6 py-16 text-[#f8f4ec] md:px-8 md:py-20 lg:px-10 lg:py-24 xl:px-14"
     >
+      {successfulSubmissions > 0 && <EnquirySuccessToast key={successfulSubmissions} />}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_84%_16%,rgba(240,185,87,0.10),transparent_28%),linear-gradient(180deg,rgba(248,244,236,0.035),transparent_44%)]" />
 
       <img
@@ -237,9 +272,10 @@ export function Contact() {
             <button
               type="submit"
               disabled={status === "submitting"}
+              aria-busy={status === "submitting"}
               className="group mx-auto inline-flex min-h-14 w-full max-w-[18rem] items-center justify-center gap-4 rounded-full bg-[#F0B957] px-8 py-4 font-serif text-[15px] text-[#030c1c] transition duration-300 hover:-translate-y-0.5 hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#F0B957] focus:ring-offset-4 focus:ring-offset-[#030c1c] disabled:cursor-not-allowed disabled:opacity-70 sm:mx-0 sm:w-auto"
             >
-              <span>{status === "submitting" ? "Preparing" : "Send Message"}</span>
+              <span>{status === "submitting" ? "Sending…" : "Send Message"}</span>
               <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
@@ -248,12 +284,10 @@ export function Contact() {
             <p
               className="min-h-6 text-center text-sm leading-6 text-[#f8f4ec]/62 sm:text-left"
               aria-live="polite"
+              role="status"
+              aria-atomic="true"
             >
-              {status === "success"
-                ? "Your message is ready to be connected to the contact service."
-                : status === "error"
-                  ? "Please review the highlighted fields."
-                  : ""}
+              {feedback}
             </p>
           </div>
         </form>
