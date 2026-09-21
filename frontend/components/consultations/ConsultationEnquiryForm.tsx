@@ -74,14 +74,8 @@ export function ConsultationEnquiryForm({
       });
       const result = (await response.json()) as ConsultationEnquiryApiResponse;
 
-      if (!response.ok || !result.success) {
-        setStatus("error");
-        setStatusMessage(
-          result.success
-            ? "The enquiry could not be submitted."
-            : result.message,
-        );
-        return;
+      if (!response.ok || result?.success !== true) {
+        throw new Error("Consultation submission failed");
       }
 
       clearSelectedConsultationIds();
@@ -92,7 +86,7 @@ export function ConsultationEnquiryForm({
     } catch {
       setStatus("error");
       setStatusMessage(
-        "The enquiry service is unavailable right now. Please try again later.",
+        "We couldn't submit your enquiry right now. Please try again.",
       );
     }
   }

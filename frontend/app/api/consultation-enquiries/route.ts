@@ -82,6 +82,10 @@ export async function POST(request: Request) {
     );
 
     if (error || data?.data.length !== 2) {
+      console.error("Consultation email delivery failed", {
+        providerError: error?.name,
+        acceptedEmailCount: data?.data.length ?? 0,
+      });
       throw new Error("Consultation emails were not accepted by Resend.");
     }
 
@@ -89,7 +93,10 @@ export async function POST(request: Request) {
       { success: true } satisfies ConsultationEnquiryApiResponse,
       { headers: noStoreHeaders },
     );
-  } catch {
+  } catch (error) {
+    console.error("Consultation enquiry failed", {
+      errorType: error instanceof Error ? error.name : "UnknownError",
+    });
     return Response.json(
       {
         success: false,
