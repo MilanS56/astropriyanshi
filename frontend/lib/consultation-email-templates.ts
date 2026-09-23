@@ -11,6 +11,7 @@ function escapeHtml(value: string): string {
 }
 
 const labelStyle = "margin:0 0 14px;color:#555b64;font:11px/18px Arial,Helvetica,sans-serif;letter-spacing:2px;font-weight:bold;";
+const logoUrl = "https://priyanshiiaasttro.com/images/logo/priyanshii-logo.png";
 
 function frame(title: string, content: string): string {
   return `<!doctype html>
@@ -19,9 +20,12 @@ function frame(title: string, content: string): string {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f8f4ec;"><tr><td align="center" style="padding:32px 12px;">
 <!--[if mso]><table role="presentation" width="620" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;background-color:#fffdf9;border:1px solid #e6dfd3;border-radius:12px;">
-<tr><td style="padding:32px 28px;background-color:#030c1c;border-radius:12px 12px 0 0;border-bottom:3px solid #F0B957;">
-<p style="margin:0;color:#f8f4ec;font:24px/32px Georgia,'Times New Roman',serif;letter-spacing:1px;">PRIYANSHII AASTTRO</p>
-<p style="margin:8px 0 0;color:#f8f4ec;font:10px/18px Arial,Helvetica,sans-serif;letter-spacing:3px;">ASTROLOGY CONSULTANT</p>
+<tr><td style="padding:28px;background-color:#030c1c;border-radius:12px 12px 0 0;border-bottom:3px solid #F0B957;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+<td valign="middle" style="padding:0 16px 0 0;"><img src="${logoUrl}" width="52" height="54" alt="PRIYANSHII AASTTRO" style="display:block;width:52px;height:54px;border:0;outline:none;text-decoration:none;" /></td>
+<td valign="middle"><p style="margin:0;color:#f8f4ec;font:24px/30px Georgia,'Times New Roman',serif;letter-spacing:1px;white-space:nowrap;">PRIYANSHII AASTTRO</p>
+<p style="margin:6px 0 0;color:#f8f4ec;font:10px/18px Arial,Helvetica,sans-serif;letter-spacing:3px;white-space:nowrap;">ASTROLOGY CONSULTANT</p></td>
+</tr></table>
 </td></tr>
 <tr><td style="padding:32px 28px;font:15px/25px Arial,Helvetica,sans-serif;color:#030c1c;overflow-wrap:anywhere;word-break:break-word;">${content}</td></tr>
 <tr><td style="padding:24px 28px;border-top:1px solid #e6dfd3;">
