@@ -1,0 +1,6 @@
+"use client";
+import { useLanguage } from "@/lib/i18n";
+export function ConsultationHero() {
+  const { language, c } = useLanguage();
+  return <section className="relative isolate overflow-hidden bg-[#030c1c] px-6 pb-16 pt-36 text-[#f8f4ec] md:px-8 md:pb-20 md:pt-44 lg:px-10 lg:pb-24 xl:px-14 xl:pt-40"><div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_28%,rgba(240,185,87,0.12),transparent_28%),linear-gradient(180deg,rgba(248,244,236,0.035),transparent_55%)]" /><div className="relative z-10 mx-auto max-w-[1440px]"><p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-[#f4b94f] md:text-[13px]">{c.consultationEyebrow}</p><h1 className="max-w-[56rem] font-serif text-[2.65rem] leading-[1.05] tracking-[-0.03em] min-[390px]:text-[3.1rem] md:text-[4rem] lg:text-[4.6rem]">{language === "hi" ? "आपके महत्वपूर्ण सवालों को समझने के लिए व्यक्तिगत मार्गदर्शन।" : "Explore the right consultation for your questions."}</h1><p className="mt-7 max-w-[42rem] text-base leading-8 text-[#f8f4ec]/72 md:text-[18px] md:leading-9">{language === "hi" ? "उन परामर्श क्षेत्रों को देखें जो आपकी वर्तमान स्थिति और सवालों से जुड़े हैं।" : "Every situation is different. Explore the consultation areas available through Vedic Astrology, Lal Kitab and Numerology."}</p></div></section>;
+}

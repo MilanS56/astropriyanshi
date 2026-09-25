@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { useLanguage } from "@/lib/i18n";
 
 const footerLinks = [
   { label: "Home", href: "/" },
@@ -8,6 +10,7 @@ const footerLinks = [
 ];
 
 export function Footer() {
+  const { c } = useLanguage();
   return (
     <footer className="bg-[#f8f4ec] px-6 py-8 text-[#030c1c] md:px-8 md:py-9 lg:px-10 lg:py-10 xl:px-14">
       <div className="mx-auto max-w-[1440px]">
@@ -37,20 +40,20 @@ export function Footer() {
           </div>
 
           <p className="max-w-[18rem] text-sm leading-6 text-[#030c1c]/68 md:col-span-2 md:max-w-md lg:col-span-1 lg:max-w-none lg:justify-self-center lg:whitespace-nowrap lg:text-center">
-            Guiding You Through The Language Of The Stars.
+            {c.footerTag}
           </p>
 
           <nav
             aria-label="Footer navigation"
             className="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-[#030c1c]/75 min-[360px]:gap-x-6 min-[360px]:gap-y-2 sm:gap-x-8 md:justify-end lg:flex-nowrap lg:gap-x-8 lg:justify-self-end"
           >
-            {footerLinks.map((link) => (
+            {footerLinks.map((link, index) => (
               <Link
                 key={link.label}
                 href={link.href}
                 className="rounded-full py-2 font-serif transition-colors duration-300 hover:text-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#F0B957] focus:ring-offset-4 focus:ring-offset-[#f8f4ec]"
               >
-                {link.label}
+                {index === 0 ? c.nav[0] : index === 1 ? c.nav[1] : index === 2 ? c.nav[2] : c.nav[5]}
               </Link>
             ))}
           </nav>

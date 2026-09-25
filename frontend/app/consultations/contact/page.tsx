@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   title: "Consultation Enquiry | Priyanshii Aasttro",
   description:
     "Share your consultation enquiry with Priyanshii Aasttro after choosing the area you would like to explore.",
+  alternates: { canonical: "/consultations/contact" },
+  robots: { index: false, follow: true },
 };
 
 type ConsultationContactPageProps = {

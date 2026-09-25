@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/lib/i18n";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -18,6 +19,7 @@ const drawerItems = navItems.filter((item) =>
 );
 
 export default function Navbar() {
+  const { language, setLanguage, c } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const [navHeight, setNavHeight] = useState(0);
@@ -96,7 +98,7 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 xl:flex xl:gap-10">
-          {navItems.map((item) => {
+          {navItems.map((item, index) => {
             const route = item.href.split("#")[0];
             const isActive =
               item.href === "/"
@@ -114,7 +116,7 @@ export default function Navbar() {
                     : "text-[#F4EDE2] hover:text-[#F2C875]"
                 }`}
               >
-                {item.label}
+                {c.nav[index]}
 
                 {isActive && (
                   <span className="absolute -bottom-1 left-0 h-px w-full bg-[#F2C875]" />
@@ -124,13 +126,19 @@ export default function Navbar() {
           })}
         </div>
 
+        <div className="hidden items-center gap-1 text-xs xl:flex" aria-label="Language selection">
+          <button type="button" onClick={() => setLanguage("en")} aria-pressed={language === "en"} className={`rounded-full px-2 py-1 ${language === "en" ? "text-[#F2C875]" : "text-[#F4EDE2]/65"}`}>EN</button>
+          <span className="text-[#F4EDE2]/35" aria-hidden="true">|</span>
+          <button type="button" onClick={() => setLanguage("hi")} aria-pressed={language === "hi"} className={`rounded-full px-2 py-1 ${language === "hi" ? "text-[#F2C875]" : "text-[#F4EDE2]/65"}`}>हिन्दी</button>
+        </div>
+
         {/* Desktop CTA */}
         <Link
           href="/consultations"
           className="hidden shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-[#B98942] px-7 py-3 text-sm text-[#F4EDE2] transition-all duration-300 hover:bg-[#B98942]/10 hover:text-[#F2C875] xl:flex"
         >
-          <span className="flex items-center"><img src="/images/decorators/calendar.svg" alt="Calendar" aria-hidden="true" className="h-5 w-5 object-contain" /></span>
-          <span className="font-serif">Book a Session</span>
+          <span className="flex items-center"><img src="/images/decorators/calendar.svg" alt="" aria-hidden="true" className="h-5 w-5 object-contain" /></span>
+          <span className="font-serif">{c.book}</span>
         </Link>
 
         {/* Mobile Menu Button */}
@@ -182,11 +190,13 @@ export default function Navbar() {
       >
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
           <p className="mb-4 text-[10px] font-medium uppercase tracking-[0.32em] text-[#F2C875]">
-            Navigation
+            {c.navigation}
           </p>
 
           <div className="flex flex-col border-y border-[#F4EDE2]/10">
-            {drawerItems.map((item) => (
+            {drawerItems.map((item) => {
+              const index = navItems.findIndex((entry) => entry.label === item.label);
+              return (
               <Link
                 key={item.label}
                 href={item.href}
@@ -194,12 +204,19 @@ export default function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
                 className="group flex items-center justify-between border-b border-[#F4EDE2]/10 py-5 font-serif text-lg text-[#F4EDE2] transition-colors duration-300 last:border-b-0 hover:text-[#F2C875] focus:outline-none focus:text-[#F2C875]"
               >
-                <span>{item.label}</span>
+                <span>{c.nav[index]}</span>
                 <span className="text-base text-[#F2C875] opacity-60 transition-transform duration-300 group-hover:translate-x-1">
                   →
                 </span>
               </Link>
-            ))}
+              );
+            })}
+          </div>
+
+          <div className="mt-6 flex items-center justify-center gap-2 text-sm" aria-label="Language selection">
+            <button type="button" tabIndex={isMenuOpen ? 0 : -1} onClick={() => setLanguage("en")} aria-label={c.navEn} aria-pressed={language === "en"} className={`rounded-full px-3 py-2 ${language === "en" ? "bg-[#F0B957] text-[#030c1c]" : "text-[#F4EDE2]/70"}`}>English</button>
+            <span className="text-[#F4EDE2]/35" aria-hidden="true">|</span>
+            <button type="button" tabIndex={isMenuOpen ? 0 : -1} onClick={() => setLanguage("hi")} aria-label={c.navHi} aria-pressed={language === "hi"} className={`rounded-full px-3 py-2 ${language === "hi" ? "bg-[#F0B957] text-[#030c1c]" : "text-[#F4EDE2]/70"}`}>हिन्दी</button>
           </div>
 
           <Link
@@ -208,7 +225,7 @@ export default function Navbar() {
             onClick={() => setIsMenuOpen(false)}
             className="mt-7 inline-flex min-h-14 items-center justify-center rounded-full bg-[#F0B957] px-6 font-serif text-[15px] text-[#030c1c] transition-colors duration-300 hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#F0B957] focus:ring-offset-4 focus:ring-offset-[#06101F]"
           >
-            Book a Consultation
+            {c.book}
             <span className="ml-3 text-lg">→</span>
           </Link>
         </div>

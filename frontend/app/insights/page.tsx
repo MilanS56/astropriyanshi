@@ -4,6 +4,8 @@ import { ComingSoonPage } from "@/components/ComingSoonPage";
 export const metadata: Metadata = {
   title: "Insights | PRIYANSHII AASTTRO",
   description: "Thoughtful astrological insights and perspectives from PRIYANSHII AASTTRO. Insights coming soon.",
+  alternates: { canonical: "/insights" },
+  robots: { index: false, follow: true },
 };
 
 export default function InsightsPage() {

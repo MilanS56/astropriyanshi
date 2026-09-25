@@ -1,6 +1,9 @@
+"use client";
 import Link from "next/link";
+import { useLanguage } from "@/lib/i18n";
 
 export function About() {
+  const { c } = useLanguage();
   return (
     <section
       aria-labelledby="about-priyanshii-heading"
@@ -16,28 +19,25 @@ export function About() {
       <div className="mx-auto grid max-w-[1440px] items-center gap-12 md:grid-cols-[0.92fr_1.08fr] md:gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div className="relative z-10 max-w-xl">
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-[#f4b94f] md:text-[13px]">
-            ABOUT PRIYANSHII
+            {c.aboutEyebrow}
           </p>
 
           <h2
             id="about-priyanshii-heading"
             className="font-serif text-[2.35rem] leading-[1.08] tracking-[-0.02em] text-[#030c1c] min-[390px]:text-[2.7rem] md:text-[2.7rem] lg:text-[3.2rem] xl:text-[3.5rem]"
           >
-            A thoughtful approach to understanding life&apos;s questions.
+            {c.aboutHeading}
           </h2>
 
           <p className="mt-6 max-w-[36rem] text-base leading-8 text-[#030c1c]/75 md:text-[17px] md:leading-8">
-            Through Vedic Astrology, Lal Kitab and Numerology, Priyanshii
-            combines continuous learning with thoughtful analysis to help
-            people explore their situations with greater clarity and
-            understanding.
+            {c.aboutBody}
           </p>
 
           <Link
             href="/about"
             className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-[#F0B957] px-7 font-serif text-sm text-[#030c1c] transition-colors duration-300 hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#030c1c] focus:ring-offset-4 focus:ring-offset-[#f8f4ec]"
           >
-            Explore About Priyanshii&nbsp;&rarr;
+            {c.aboutCta}&nbsp;&rarr;
           </Link>
         </div>
 

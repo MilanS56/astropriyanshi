@@ -1,3 +1,7 @@
+"use client";
+
+import { useLanguage } from "@/lib/i18n";
+
 const principles = [
   {
     number: "01",
@@ -20,12 +24,13 @@ const principles = [
 ];
 
 export function WhyExperience() {
+  const { c } = useLanguage();
   return (
     <section
       aria-labelledby="why-experience-heading"
-      className="relative isolate overflow-hidden bg-[#030c1c] px-6 py-16 text-[#f8f4ec] md:px-8 md:py-20 lg:px-10 lg:py-28 xl:px-14"
+      className="relative isolate overflow-hidden bg-[#f8f4ec] px-6 py-16 text-[#030c1c] md:px-8 md:py-20 lg:px-10 lg:py-28 xl:px-14"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(240,185,87,0.13),transparent_34%),linear-gradient(180deg,rgba(248,244,236,0.04),transparent_38%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(240,185,87,0.13),transparent_34%)]" />
 
       <img
         src="/images/decorators/star.svg"
@@ -37,31 +42,28 @@ export function WhyExperience() {
       <div className="relative z-10 mx-auto max-w-[1440px]">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-[#f4b94f] md:text-[13px]">
-            WHY THIS EXPERIENCE?
+            {c.whyEyebrow}
           </p>
 
           <h2
             id="why-experience-heading"
-            className="font-serif text-[2.45rem] leading-[1.08] tracking-[-0.02em] text-[#f8f4ec] min-[390px]:text-[2.85rem] md:text-[3.25rem] lg:text-[3.75rem]"
+            className="font-serif text-[2.45rem] leading-[1.08] tracking-[-0.02em] text-[#030c1c] min-[390px]:text-[2.85rem] md:text-[3.25rem] lg:text-[3.75rem]"
           >
-            More than answers.
-            <br />
-            <span className="text-[#f4b94f]">A clearer way forward.</span>
+            {c.whyHeading}
           </h2>
 
-          <p className="mx-auto mt-6 max-w-[35rem] text-base leading-8 text-[#f8f4ec]/72 md:text-[17px]">
-            Every consultation is an opportunity to pause, reflect and
-            understand the patterns shaping your journey.
+          <p className="mx-auto mt-6 max-w-[35rem] text-base leading-8 text-[#030c1c]/72 md:text-[17px]">
+            {c.whyIntro}
           </p>
         </div>
 
-        <div className="mt-10 grid gap-0 border-y border-[#f8f4ec]/12 md:mt-14 md:grid-cols-2 lg:mt-16 lg:grid-cols-3">
+        <div className="mt-10 grid gap-0 border-y border-[#030c1c]/12 md:mt-14 md:grid-cols-2 lg:mt-16 lg:grid-cols-3">
           {principles.map((principle, index) => (
             <article
               key={principle.number}
               className={`py-6 md:px-8 md:py-9 lg:px-10 ${
                 index > 0
-                  ? "border-t border-[#f8f4ec]/12 md:border-t-0 md:border-l"
+                  ? "border-t border-[#030c1c]/12 md:border-t-0 md:border-l"
                   : ""
               } ${
                 index === 2
@@ -73,12 +75,12 @@ export function WhyExperience() {
                 {principle.number}
               </p>
 
-              <h3 className="mt-4 max-w-[18rem] font-serif text-[1.35rem] leading-tight tracking-[0.08em] text-[#f8f4ec] md:mt-5 md:text-[1.45rem]">
-                {principle.title}
+              <h3 className="mt-4 max-w-[18rem] font-serif text-[1.35rem] leading-tight tracking-[0.08em] text-[#030c1c] md:mt-5 md:text-[1.45rem]">
+                {c.principles[index]}
               </h3>
 
-              <p className="mt-3 max-w-[22rem] text-sm leading-7 text-[#f8f4ec]/68 md:mt-4 md:text-[15px]">
-                {principle.description}
+              <p className="mt-3 max-w-[22rem] text-sm leading-7 text-[#030c1c]/68 md:mt-4 md:text-[15px]">
+                {c.principleText[index]}
               </p>
             </article>
           ))}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/lib/i18n";
 import {
   consultations,
   FULL_HOROSCOPE_CONSULTATION_ID,
@@ -14,6 +15,7 @@ import {
 } from "@/lib/consultation-selection";
 
 export function ConsultationList() {
+  const { language, c } = useLanguage();
   const [selectedConsultationIds, setSelectedConsultationIds] = useState<string[]>([]);
   const selectedConsultations = getConsultationsByIds(selectedConsultationIds);
   const selectedCount = selectedConsultations.length;
@@ -69,16 +71,16 @@ export function ConsultationList() {
       <div className="mx-auto max-w-[1440px]">
         <div className="max-w-3xl">
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-[#f4b94f] md:text-[13px]">
-            SELECT CONSULTATIONS
+            {c.consultationEyebrow}
           </p>
           <h2
             id="consultation-list-heading"
             className="font-serif text-[2.35rem] leading-[1.08] tracking-[-0.02em] min-[390px]:text-[2.75rem] md:text-[3.3rem]"
           >
-            Choose the areas you would like to explore.
+            {c.consultationHeading}
           </h2>
           <p className="mt-5 text-sm leading-7 text-[#030c1c]/62 md:text-base">
-            Select one or more consultations to continue.
+            {c.consultationBody}
           </p>
         </div>
 
@@ -106,9 +108,9 @@ export function ConsultationList() {
                   </span>
                   <span className="min-w-0">
                     <span className="block font-serif text-xl leading-7 text-[#030c1c] md:text-[1.35rem]">
-                      {service.name}
+                    {language === "hi" ? (service.hindiName ?? service.name) : service.name}
                     </span>
-                    {service.hindiName && (
+                    {language === "en" && service.hindiName && (
                       <span lang="hi" className="mt-2 block text-base leading-7 text-[#030c1c]/60">
                         {service.hindiName}
                       </span>
@@ -124,7 +126,7 @@ export function ConsultationList() {
                       isSelected ? "text-[#030c1c]" : "text-[#030c1c]/58 group-hover:text-[#f4b94f]"
                     }`}
                   >
-                    {isSelected ? "Selected" : "Select"}
+                    {isSelected ? c.selectedWord : c.select}
                     <span className="text-base" aria-hidden="true">
                       {isSelected ? "✓" : "→"}
                     </span>
@@ -147,7 +149,7 @@ export function ConsultationList() {
             <div className="grid gap-3 px-4 py-3.5 sm:grid-cols-[1fr_auto] sm:items-center sm:px-5 md:px-6">
               <div className="min-w-0">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#F0B957] md:text-xs">
-                  {selectedCount} consultation{selectedCount === 1 ? "" : "s"} selected
+                  {selectedCount} {language === "hi" ? "परामर्श चयनित" : `consultation${selectedCount === 1 ? "" : "s"} selected`}
                 </p>
                 <ul
                   aria-label="Selected consultations"
@@ -180,13 +182,13 @@ export function ConsultationList() {
                   onClick={clearConsultations}
                   className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#f8f4ec]/25 px-4 font-serif text-sm text-[#f8f4ec]/75 transition-colors hover:border-[#F0B957]/60 hover:text-[#F0B957] focus:outline-none focus:ring-2 focus:ring-[#F0B957]"
                 >
-                  Clear all
+                  {c.clear}
                 </button>
                 <Link
                   href={continueHref}
                   className="group inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-full bg-[#F0B957] px-4 font-serif text-sm text-[#030c1c] transition-colors hover:bg-[#f4b94f] focus:outline-none focus:ring-2 focus:ring-[#F0B957] focus:ring-offset-4 focus:ring-offset-[#030c1c] sm:px-7"
                 >
-                  Continue to Enquiry
+                  {c.continue}
                   <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </Link>
               </div>

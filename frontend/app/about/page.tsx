@@ -56,9 +56,10 @@ const areas = [
 ];
 
 export const metadata: Metadata = {
-  title: "About Priyanshii | Vedic Astrologer, Lal Kitab Practitioner & Numerologist",
-  description:
-    "Learn about Priyanshii's journey in Vedic Astrology, Lal Kitab and Numerology, her approach to consultations, and her philosophy of continuous learning and thoughtful guidance.",
+  title: "About Priyanshii | PRIYANSHII AASTTRO",
+  description: "Learn about Priyanshii's approach to Vedic Astrology, Lal Kitab and Numerology, and her journey of continuous learning and consultation.",
+  alternates: { canonical: "/about" },
+  openGraph: { title: "About Priyanshii | PRIYANSHII AASTTRO", description: "Learn about Priyanshii's approach to Vedic Astrology, Lal Kitab and Numerology, and her journey of continuous learning and consultation.", url: "https://priyanshiiaasttro.com/about" },
 };
 
 function Eyebrow({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) {
