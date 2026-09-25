@@ -28,7 +28,7 @@ export function Footer() {
               />
 
               <span className="text-left">
-                <span className="block font-serif text-[11px] tracking-[0.08em] text-[#030c1c] min-[360px]:text-xs lg:text-base">
+                <span className="font-brand block font-serif text-[11px] tracking-[0.08em] text-[#030c1c] min-[360px]:text-xs lg:text-base">
                   PRIYANSHII AASTTRO
                 </span>
 

@@ -84,7 +84,7 @@ export default function Navbar() {
           />
 
           <div>
-            <div className="font-serif text-[11px] tracking-[0.04em] text-[#F4EDE2] min-[360px]:text-xs sm:text-xl sm:tracking-[0.08em] sm:text-[#F2C875]">
+            <div className="font-brand font-serif text-[11px] tracking-[0.04em] text-[#F4EDE2] min-[360px]:text-xs sm:text-xl sm:tracking-[0.08em] sm:text-[#F2C875]">
               PRIYANSHII AASTTRO
             </div>
 

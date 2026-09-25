@@ -33,3 +33,16 @@ html[lang="hi"] .font-serif {
   font-family: "Noto Sans Devanagari", "Nirmala UI", Georgia, serif;
   letter-spacing: -0.01em;
 }
+
+html[lang="hi"] .font-brand {
+  font-family: Georgia, "Times New Roman", serif !important;
+  letter-spacing: 0.04em !important;
+  white-space: nowrap;
+  font-variant-ligatures: none;
+}
+
+@media (min-width: 640px) {
+  html[lang="hi"] .font-brand {
+    letter-spacing: 0.08em !important;
+  }
+}
